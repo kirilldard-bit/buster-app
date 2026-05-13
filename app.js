@@ -28,11 +28,17 @@ const homeTab =
 const historyTab =
   document.getElementById('historyTab');
 
+const settingsTab =
+  document.getElementById('settingsTab');
+
 const homeScreen =
   document.getElementById('homeScreen');
 
 const historyScreen =
   document.getElementById('historyScreen');
+
+const settingsScreen =
+  document.getElementById('settingsScreen');
 
 let enabled = false;
 
@@ -118,9 +124,9 @@ function addConsoleLine() {
   }
 }
 
-homeTab.addEventListener('click', () => {
+function hideAllScreens() {
 
-  homeScreen.classList.add(
+  homeScreen.classList.remove(
     'active-screen'
   );
 
@@ -128,28 +134,48 @@ homeTab.addEventListener('click', () => {
     'active-screen'
   );
 
-  homeTab.classList.add('active');
-
-  historyTab.classList.remove(
-    'active'
+  settingsScreen.classList.remove(
+    'active-screen'
   );
+
+  homeTab.classList.remove('active');
+
+  historyTab.classList.remove('active');
+
+  settingsTab.classList.remove('active');
+}
+
+homeTab.addEventListener('click', () => {
+
+  hideAllScreens();
+
+  homeScreen.classList.add(
+    'active-screen'
+  );
+
+  homeTab.classList.add('active');
 });
 
 historyTab.addEventListener('click', () => {
+
+  hideAllScreens();
 
   historyScreen.classList.add(
     'active-screen'
   );
 
-  homeScreen.classList.remove(
+  historyTab.classList.add('active');
+});
+
+settingsTab.addEventListener('click', () => {
+
+  hideAllScreens();
+
+  settingsScreen.classList.add(
     'active-screen'
   );
 
-  historyTab.classList.add('active');
-
-  homeTab.classList.remove(
-    'active'
-  );
+  settingsTab.classList.add('active');
 });
 
 powerButton.addEventListener('click', () => {
