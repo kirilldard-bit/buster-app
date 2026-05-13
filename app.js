@@ -78,6 +78,31 @@ const logs = [
 
 ];
 
+const translitMap = {
+
+  'а':'a','б':'b','в':'v','г':'g',
+  'д':'d','е':'e','ё':'e','ж':'zh',
+  'з':'z','и':'i','й':'y','к':'k',
+  'л':'l','м':'m','н':'n','о':'o',
+  'п':'p','р':'r','с':'s','т':'t',
+  'у':'u','ф':'f','х':'h','ц':'ts',
+  'ч':'ch','ш':'sh','щ':'sch',
+  'ъ':'','ы':'y','ь':'',
+  'э':'e','ю':'yu','я':'ya'
+};
+
+function transliterate(text) {
+
+  return text
+    .toLowerCase()
+    .split('')
+    .map(char =>
+      translitMap[char] || char
+    )
+    .join('')
+    .replace(/(^\\w)/, c => c.toUpperCase());
+}
+
 function formatTime(sec) {
 
   const hrs = String(
@@ -104,8 +129,14 @@ function randomPing() {
 
 function generateNode(city) {
 
+  const latin =
+    transliterate(city);
+
   const clean =
-    city.trim().substring(0, 3).toUpperCase();
+    latin
+      .replace(/[^a-zA-Z]/g, '')
+      .substring(0, 3)
+      .toUpperCase();
 
   return `${clean}-01`;
 }
@@ -202,8 +233,11 @@ cityInput.addEventListener('input', () => {
 
   if (city.length > 0) {
 
+    const latinCity =
+      transliterate(city);
+
     routeValue.textContent =
-      city;
+      latinCity;
 
     nodeValue.textContent =
       generateNode(city);
