@@ -1,11 +1,20 @@
-const powerButton = document.getElementById('powerButton');
-const buttonIcon = document.getElementById('buttonIcon');
+const powerButton =
+  document.getElementById('powerButton');
 
-const timer = document.getElementById('timer');
+const buttonIcon =
+  document.getElementById('buttonIcon');
 
-const statusText = document.getElementById('statusText');
+const timer =
+  document.getElementById('timer');
 
-const glow = document.querySelector('.circle-glow');
+const statusText =
+  document.getElementById('statusText');
+
+const statusValue =
+  document.getElementById('statusValue');
+
+const glow =
+  document.querySelector('.circle-glow');
 
 let enabled = false;
 
@@ -42,7 +51,19 @@ powerButton.addEventListener('click', () => {
 
     buttonIcon.textContent = '✓';
 
-    statusText.textContent = 'CONNECTED';
+    statusText.textContent =
+      'CONNECTED';
+
+    statusValue.textContent =
+      'ACTIVE';
+
+    statusValue.classList.remove(
+      'disconnected'
+    );
+
+    statusValue.classList.add(
+      'online'
+    );
 
     glow.style.background =
       'radial-gradient(circle, rgba(139,92,246,0.35), transparent 70%)';
@@ -51,7 +72,8 @@ powerButton.addEventListener('click', () => {
 
       seconds++;
 
-      timer.textContent = formatTime(seconds);
+      timer.textContent =
+        formatTime(seconds);
 
     }, 1000);
 
@@ -63,10 +85,22 @@ powerButton.addEventListener('click', () => {
 
     buttonIcon.textContent = '⏻';
 
-    statusText.textContent = 'DISCONNECTED';
+    statusText.textContent =
+      'DISCONNECTED';
+
+    statusValue.textContent =
+      'DISCONNECTED';
+
+    statusValue.classList.remove(
+      'online'
+    );
+
+    statusValue.classList.add(
+      'disconnected'
+    );
 
     glow.style.background =
-      'radial-gradient(circle, rgba(255,196,0,0.15), transparent 70%)';
+      'radial-gradient(circle, rgba(255,196,0,0.18), transparent 70%)';
 
     clearInterval(interval);
   }

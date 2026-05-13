@@ -269,4 +269,10 @@ body {
 
 .nav-btn:hover {
   transform: translateY(-2px);
+}.online {
+  color: #b388ff;
+}
+
+.disconnected {
+  color: #f5c542;
 }
