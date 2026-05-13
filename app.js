@@ -1,305 +1,374 @@
-const powerButton = document.getElementById('powerButton');
-const buttonIcon = document.getElementById('buttonIcon');
+const powerButton =
+  document.getElementById('powerButton');
 
-const timerElement = document.getElementById('timer');
-const statusElement = document.getElementById('statusText');
-const pingElement = document.getElementById('pingValue');
-const routeElement = document.getElementById('routeValue');
-const nodeElement = document.getElementById('nodeValue');
+const buttonIcon =
+  document.getElementById('buttonIcon');
 
-const navButtons = document.querySelectorAll('.nav-btn');
-const pages = document.querySelectorAll('.page');
+const timer =
+  document.getElementById('timer');
 
-const cityInput = document.getElementById('cityInput');
-const tariffInput = document.getElementById('tariffInput');
-const ratingInput = document.getElementById('ratingInput');
+const statusText =
+  document.getElementById('statusText');
 
-const consoleOutput = document.getElementById('consoleOutput');
+const statusValue =
+  document.getElementById('statusValue');
 
-let active = false;
+const pingValue =
+  document.getElementById('pingValue');
+
+const glow =
+  document.querySelector('.circle-glow');
+
+const consoleWindow =
+  document.getElementById('consoleWindow');
+
+const homeTab =
+  document.getElementById('homeTab');
+
+const historyTab =
+  document.getElementById('historyTab');
+
+const settingsTab =
+  document.getElementById('settingsTab');
+
+const homeScreen =
+  document.getElementById('homeScreen');
+
+const historyScreen =
+  document.getElementById('historyScreen');
+
+const settingsScreen =
+  document.getElementById('settingsScreen');
+
+const cityInput =
+  document.getElementById('cityInput');
+
+const routeValue =
+  document.getElementById('routeValue');
+
+const nodeValue =
+  document.getElementById('nodeValue');
+
+let enabled = false;
+
 let seconds = 0;
-let timerInterval = null;
+
+let interval = null;
+
 let pingInterval = null;
-let nodeInterval = null;
+
 let consoleInterval = null;
 
-// =========================
-// TIMER
-// =========================
+let nodeInterval = null;
 
-function formatTime(value) {
-    return value.toString().padStart(2, '0');
-}
+const logs = [
 
-function updateTimer() {
+  'secure tunnel initialized...',
+  'routing package established...',
+  'node synchronization complete...',
+  'latency optimization enabled...',
+  'route encrypted successfully...',
+  'system heartbeat detected...',
+  'proxy channel updated...',
+  'dynamic node allocation active...',
+  'network mask injected...',
+  'secure route confirmed...',
+  'packet stream stabilized...',
+  'endpoint verified...',
+  'secure dns route applied...',
+  'traffic rerouted successfully...'
 
-    seconds++;
+];
 
-    const hrs = Math.floor(seconds / 3600);
-    const mins = Math.floor((seconds % 3600) / 60);
-    const secs = seconds % 60;
+const translitMap = {
 
-    timerElement.textContent =
-        `${formatTime(hrs)}:${formatTime(mins)}:${formatTime(secs)}`;
-}
-
-function resetTimer() {
-
-    seconds = 0;
-
-    timerElement.textContent = '00:00:00';
-}
-
-// =========================
-// STATUS
-// =========================
-
-function setConnectedState() {
-
-    statusElement.textContent = 'ACTIVE';
-    statusElement.style.color = '#8b5cf6';
-
-    powerButton.classList.add('active');
-}
-
-function setDisconnectedState() {
-
-    statusElement.textContent = 'DISCONNECTED';
-    statusElement.style.color = '#facc15';
-
-    powerButton.classList.remove('active');
-}
-
-// =========================
-// RANDOM PING
-// =========================
-
-function generatePing() {
-
-    return Math.floor(Math.random() * (127 - 13 + 1)) + 13;
-}
-
-function startPingUpdates() {
-
-    pingElement.textContent = '0ms';
-
-    pingInterval = setInterval(() => {
-
-        const ping = generatePing();
-
-        pingElement.textContent = `${ping}ms`;
-
-    }, 2000);
-}
-
-function stopPingUpdates() {
-
-    clearInterval(pingInterval);
-
-    pingElement.textContent = '0ms';
-}
-
-// =========================
-// CITY / ROUTE / NODE
-// =========================
+  'а':'a','б':'b','в':'v','г':'g',
+  'д':'d','е':'e','ё':'e','ж':'zh',
+  'з':'z','и':'i','й':'y','к':'k',
+  'л':'l','м':'m','н':'n','о':'o',
+  'п':'p','р':'r','с':'s','т':'t',
+  'у':'u','ф':'f','х':'h','ц':'ts',
+  'ч':'ch','ш':'sh','щ':'sch',
+  'ъ':'','ы':'y','ь':'',
+  'э':'e','ю':'yu','я':'ya'
+};
 
 function transliterate(text) {
 
-    const map = {
-        'а':'a','б':'b','в':'v','г':'g','д':'d',
-        'е':'e','ё':'e','ж':'zh','з':'z','и':'i',
-        'й':'y','к':'k','л':'l','м':'m','н':'n',
-        'о':'o','п':'p','р':'r','с':'s','т':'t',
-        'у':'u','ф':'f','х':'h','ц':'ts','ч':'ch',
-        'ш':'sh','щ':'sch','ъ':'','ы':'y','ь':'',
-        'э':'e','ю':'yu','я':'ya'
-    };
+  const transliterated = text
+    .toLowerCase()
+    .split('')
+    .map(char =>
+      translitMap[char] || char
+    )
+    .join('');
 
-    return text
-        .toLowerCase()
-        .split('')
-        .map(char => map[char] || char)
-        .join('');
+  return transliterated.charAt(0).toUpperCase() +
+    transliterated.slice(1);
 }
 
-function capitalize(text) {
+function formatTime(sec) {
 
-    if (!text) return '';
+  const hrs = String(
+    Math.floor(sec / 3600)
+  ).padStart(2, '0');
 
-    return text.charAt(0).toUpperCase() + text.slice(1);
+  const mins = String(
+    Math.floor((sec % 3600) / 60)
+  ).padStart(2, '0');
+
+  const secs = String(
+    sec % 60
+  ).padStart(2, '0');
+
+  return `${hrs}:${mins}:${secs}`;
 }
 
-function updateCityData() {
+function randomPing() {
 
-    const city = cityInput.value.trim();
-
-    if (!city) {
-
-        routeElement.textContent = 'Moscow';
-        nodeElement.textContent = 'MSK-01';
-
-        return;
-    }
-
-    const latin = transliterate(city);
-    const formatted = capitalize(latin);
-
-    routeElement.textContent = formatted;
-
-    updateNode(formatted);
+  return Math.floor(
+    Math.random() * (127 - 13 + 1)
+  ) + 13;
 }
 
-function updateNode(city) {
+function randomNodeNumber() {
 
-    const short = city.substring(0, 3).toUpperCase();
-
-    const randomNumber = Math.floor(Math.random() * 9) + 1;
-
-    nodeElement.textContent = `${short}-0${randomNumber}`;
+  return String(
+    Math.floor(Math.random() * 9) + 1
+  ).padStart(2, '0');
 }
 
-function startNodeUpdates() {
+function generateNode(city) {
 
-    nodeInterval = setInterval(() => {
+  const latin =
+    transliterate(city);
 
-        const city = routeElement.textContent;
+  const clean =
+    latin
+      .replace(/[^a-zA-Z]/g, '')
+      .substring(0, 3)
+      .toUpperCase();
 
-        updateNode(city);
-
-    }, 3000);
+  return `${clean}-${randomNodeNumber()}`;
 }
 
-function stopNodeUpdates() {
+function updateNode() {
 
-    clearInterval(nodeInterval);
+  const city =
+    cityInput.value.trim();
+
+  if (city.length > 0) {
+
+    nodeValue.textContent =
+      generateNode(city);
+  }
 }
-
-// =========================
-// HISTORY CONSOLE
-// =========================
-
-const consoleLines = [
-    '[INFO] Initializing encrypted tunnel...',
-    '[OK] Node synchronized successfully',
-    '[INFO] Route optimization complete',
-    '[INFO] Connection secured',
-    '[OK] Session token updated',
-    '[INFO] Loading transport layer...',
-    '[OK] Ping stabilized',
-    '[INFO] BUSTER core online',
-    '[INFO] Monitoring packets...',
-    '[OK] Remote endpoint accepted',
-    '[INFO] Verifying network state...',
-    '[OK] Secure relay connected'
-];
 
 function addConsoleLine() {
 
-    const line = document.createElement('div');
+  const line =
+    document.createElement('div');
 
-    const randomText = consoleLines[
-        Math.floor(Math.random() * consoleLines.length)
+  line.classList.add('console-line');
+
+  const currentTime =
+    new Date().toLocaleTimeString('ru-RU');
+
+  const randomLog =
+    logs[
+      Math.floor(Math.random() * logs.length)
     ];
 
-    const time = new Date().toLocaleTimeString();
+  line.textContent =
+    `[${currentTime}] ${randomLog}`;
 
-    line.textContent = `[${time}] ${randomText}`;
+  consoleWindow.prepend(line);
 
-    consoleOutput.prepend(line);
+  const lines =
+    document.querySelectorAll('.console-line');
 
-    if (consoleOutput.children.length > 25) {
+  if (lines.length > 18) {
 
-        consoleOutput.removeChild(consoleOutput.lastChild);
-    }
+    lines[
+      lines.length - 1
+    ].remove();
+  }
 }
 
-function startConsole() {
+function hideAllScreens() {
+
+  homeScreen.classList.remove(
+    'active-screen'
+  );
+
+  historyScreen.classList.remove(
+    'active-screen'
+  );
+
+  settingsScreen.classList.remove(
+    'active-screen'
+  );
+
+  homeTab.classList.remove('active');
+
+  historyTab.classList.remove('active');
+
+  settingsTab.classList.remove('active');
+}
+
+homeTab.addEventListener('click', () => {
+
+  hideAllScreens();
+
+  homeScreen.classList.add(
+    'active-screen'
+  );
+
+  homeTab.classList.add('active');
+});
+
+historyTab.addEventListener('click', () => {
+
+  hideAllScreens();
+
+  historyScreen.classList.add(
+    'active-screen'
+  );
+
+  historyTab.classList.add('active');
+});
+
+settingsTab.addEventListener('click', () => {
+
+  hideAllScreens();
+
+  settingsScreen.classList.add(
+    'active-screen'
+  );
+
+  settingsTab.classList.add('active');
+});
+
+cityInput.addEventListener('input', () => {
+
+  const city =
+    cityInput.value.trim();
+
+  clearInterval(nodeInterval);
+
+  if (city.length > 0) {
+
+    const latinCity =
+      transliterate(city);
+
+    routeValue.textContent =
+      latinCity;
+
+    updateNode();
+
+    nodeInterval = setInterval(() => {
+
+      updateNode();
+
+    }, 2000);
+
+  } else {
+
+    routeValue.textContent =
+      'Moscow';
+
+    nodeValue.textContent =
+      'MSK-01';
+  }
+
+});
+
+powerButton.addEventListener('click', () => {
+
+  enabled = !enabled;
+
+  if (enabled) {
+
+    powerButton.classList.remove('off');
+
+    powerButton.classList.add('on');
+
+    buttonIcon.textContent = '✓';
+
+    statusText.textContent =
+      'CONNECTED';
+
+    statusValue.textContent =
+      'ACTIVE';
+
+    statusValue.classList.remove(
+      'disconnected'
+    );
+
+    statusValue.classList.add(
+      'online'
+    );
+
+    glow.style.background =
+      'radial-gradient(circle, rgba(139,92,246,0.35), transparent 70%)';
+
+    interval = setInterval(() => {
+
+      seconds++;
+
+      timer.textContent =
+        formatTime(seconds);
+
+    }, 1000);
+
+    pingValue.textContent =
+      `${randomPing()}ms`;
+
+    pingInterval = setInterval(() => {
+
+      pingValue.textContent =
+        `${randomPing()}ms`;
+
+    }, 2000);
 
     addConsoleLine();
 
     consoleInterval = setInterval(() => {
 
-        addConsoleLine();
+      addConsoleLine();
 
-    }, 1200);
-}
+    }, 1800);
 
-function stopConsole() {
+  } else {
+
+    powerButton.classList.remove('on');
+
+    powerButton.classList.add('off');
+
+    buttonIcon.textContent = '⏻';
+
+    statusText.textContent =
+      'DISCONNECTED';
+
+    statusValue.textContent =
+      'DISCONNECTED';
+
+    statusValue.classList.remove(
+      'online'
+    );
+
+    statusValue.classList.add(
+      'disconnected'
+    );
+
+    glow.style.background =
+      'radial-gradient(circle, rgba(255,196,0,0.18), transparent 70%)';
+
+    clearInterval(interval);
+
+    clearInterval(pingInterval);
 
     clearInterval(consoleInterval);
-}
+  }
 
-// =========================
-// POWER BUTTON
-// =========================
-
-powerButton.addEventListener('click', () => {
-
-    active = !active;
-
-    if (active) {
-
-        setConnectedState();
-
-        timerInterval = setInterval(updateTimer, 1000);
-
-        startPingUpdates();
-        startNodeUpdates();
-        startConsole();
-
-        buttonIcon.textContent = '■';
-
-    } else {
-
-        setDisconnectedState();
-
-        clearInterval(timerInterval);
-
-        stopPingUpdates();
-        stopNodeUpdates();
-        stopConsole();
-
-        resetTimer();
-
-        buttonIcon.textContent = '□';
-    }
 });
-
-// =========================
-// NAVIGATION
-// =========================
-
-navButtons.forEach(button => {
-
-    button.addEventListener('click', () => {
-
-        const target = button.dataset.page;
-
-        navButtons.forEach(btn => {
-            btn.classList.remove('active');
-        });
-
-        pages.forEach(page => {
-            page.classList.remove('active');
-        });
-
-        button.classList.add('active');
-
-        document
-            .getElementById(target)
-            .classList.add('active');
-    });
-});
-
-// =========================
-// SETTINGS INPUTS
-// =========================
-
-cityInput.addEventListener('input', updateCityData);
-
-// =========================
-// INIT
-// =========================
-
-setDisconnectedState();
-updateCityData();
