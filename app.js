@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const powerButton = document.getElementById('powerButton');
 const buttonIcon = document.getElementById('buttonIcon');
 
@@ -71,4 +72,79 @@ powerButton.addEventListener('click', () => {
     clearInterval(interval);
   }
 
+=======
+const powerButton = document.getElementById('powerButton');
+const buttonIcon = document.getElementById('buttonIcon');
+
+const timer = document.getElementById('timer');
+
+const statusText = document.getElementById('statusText');
+
+const glow = document.querySelector('.circle-glow');
+
+let enabled = false;
+
+let seconds = 0;
+
+let interval = null;
+
+function formatTime(sec) {
+
+  const hrs = String(
+    Math.floor(sec / 3600)
+  ).padStart(2, '0');
+
+  const mins = String(
+    Math.floor((sec % 3600) / 60)
+  ).padStart(2, '0');
+
+  const secs = String(
+    sec % 60
+  ).padStart(2, '0');
+
+  return `${hrs}:${mins}:${secs}`;
+}
+
+powerButton.addEventListener('click', () => {
+
+  enabled = !enabled;
+
+  if (enabled) {
+
+    powerButton.classList.remove('off');
+
+    powerButton.classList.add('on');
+
+    buttonIcon.textContent = '✓';
+
+    statusText.textContent = 'CONNECTED';
+
+    glow.style.background =
+      'radial-gradient(circle, rgba(139,92,246,0.35), transparent 70%)';
+
+    interval = setInterval(() => {
+
+      seconds++;
+
+      timer.textContent = formatTime(seconds);
+
+    }, 1000);
+
+  } else {
+
+    powerButton.classList.remove('on');
+
+    powerButton.classList.add('off');
+
+    buttonIcon.textContent = '⏻';
+
+    statusText.textContent = 'DISCONNECTED';
+
+    glow.style.background =
+      'radial-gradient(circle, rgba(255,196,0,0.15), transparent 70%)';
+
+    clearInterval(interval);
+  }
+
+>>>>>>> c8a4ebe570a0d7c571ffb5412dc55ee7a9b64d90
 });
