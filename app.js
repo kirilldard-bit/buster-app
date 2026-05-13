@@ -13,6 +13,9 @@ const statusText =
 const statusValue =
   document.getElementById('statusValue');
 
+const pingValue =
+  document.getElementById('pingValue');
+
 const glow =
   document.querySelector('.circle-glow');
 
@@ -21,6 +24,8 @@ let enabled = false;
 let seconds = 0;
 
 let interval = null;
+
+let pingInterval = null;
 
 function formatTime(sec) {
 
@@ -37,6 +42,13 @@ function formatTime(sec) {
   ).padStart(2, '0');
 
   return `${hrs}:${mins}:${secs}`;
+}
+
+function randomPing() {
+
+  return Math.floor(
+    Math.random() * (127 - 13 + 1)
+  ) + 13;
 }
 
 powerButton.addEventListener('click', () => {
@@ -77,6 +89,16 @@ powerButton.addEventListener('click', () => {
 
     }, 1000);
 
+    pingValue.textContent =
+      `${randomPing()}ms`;
+
+    pingInterval = setInterval(() => {
+
+      pingValue.textContent =
+        `${randomPing()}ms`;
+
+    }, 2000);
+
   } else {
 
     powerButton.classList.remove('on');
@@ -103,6 +125,8 @@ powerButton.addEventListener('click', () => {
       'radial-gradient(circle, rgba(255,196,0,0.18), transparent 70%)';
 
     clearInterval(interval);
+
+    clearInterval(pingInterval);
   }
 
 });
