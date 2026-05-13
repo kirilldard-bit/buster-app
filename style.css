@@ -11,23 +11,16 @@ body {
   font-family: Arial, sans-serif;
   color: white;
 
-  background:
+  background-image:
     linear-gradient(
       rgba(0,0,0,0.88),
-      #000000f0
+      rgba(0,0,0,0.94)
     ),
-    url('./assets/9f280da7-68dc-44b9-af99-cfdd441d11e2.png');
+    url('./assets/map.png');
 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-}
-
-.background-overlay {
-  position: fixed;
-  inset: 0;
-
-  backdrop-filter: blur(2px);
 }
 
 .grid-overlay {
