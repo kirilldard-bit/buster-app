@@ -40,6 +40,15 @@ const historyScreen =
 const settingsScreen =
   document.getElementById('settingsScreen');
 
+const cityInput =
+  document.getElementById('cityInput');
+
+const routeValue =
+  document.getElementById('routeValue');
+
+const nodeValue =
+  document.getElementById('nodeValue');
+
 let enabled = false;
 
 let seconds = 0;
@@ -91,6 +100,14 @@ function randomPing() {
   return Math.floor(
     Math.random() * (127 - 13 + 1)
   ) + 13;
+}
+
+function generateNode(city) {
+
+  const clean =
+    city.trim().substring(0, 3).toUpperCase();
+
+  return `${clean}-01`;
 }
 
 function addConsoleLine() {
@@ -176,6 +193,30 @@ settingsTab.addEventListener('click', () => {
   );
 
   settingsTab.classList.add('active');
+});
+
+cityInput.addEventListener('input', () => {
+
+  const city =
+    cityInput.value.trim();
+
+  if (city.length > 0) {
+
+    routeValue.textContent =
+      city;
+
+    nodeValue.textContent =
+      generateNode(city);
+
+  } else {
+
+    routeValue.textContent =
+      'Moscow';
+
+    nodeValue.textContent =
+      'MSK-01';
+  }
+
 });
 
 powerButton.addEventListener('click', () => {
