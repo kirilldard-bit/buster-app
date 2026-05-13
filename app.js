@@ -93,14 +93,16 @@ const translitMap = {
 
 function transliterate(text) {
 
-  return text
+  const transliterated = text
     .toLowerCase()
     .split('')
     .map(char =>
       translitMap[char] || char
     )
-    .join('')
-    .replace(/(^\\w)/, c => c.toUpperCase());
+    .join('');
+
+  return transliterated.charAt(0).toUpperCase() +
+    transliterated.slice(1);
 }
 
 function formatTime(sec) {
