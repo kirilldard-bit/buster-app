@@ -59,6 +59,8 @@ let pingInterval = null;
 
 let consoleInterval = null;
 
+let nodeInterval = null;
+
 const logs = [
 
   'secure tunnel initialized...',
@@ -129,6 +131,13 @@ function randomPing() {
   ) + 13;
 }
 
+function randomNodeNumber() {
+
+  return String(
+    Math.floor(Math.random() * 9) + 1
+  ).padStart(2, '0');
+}
+
 function generateNode(city) {
 
   const latin =
@@ -140,7 +149,19 @@ function generateNode(city) {
       .substring(0, 3)
       .toUpperCase();
 
-  return `${clean}-01`;
+  return `${clean}-${randomNodeNumber()}`;
+}
+
+function updateNode() {
+
+  const city =
+    cityInput.value.trim();
+
+  if (city.length > 0) {
+
+    nodeValue.textContent =
+      generateNode(city);
+  }
 }
 
 function addConsoleLine() {
@@ -233,6 +254,8 @@ cityInput.addEventListener('input', () => {
   const city =
     cityInput.value.trim();
 
+  clearInterval(nodeInterval);
+
   if (city.length > 0) {
 
     const latinCity =
@@ -241,8 +264,13 @@ cityInput.addEventListener('input', () => {
     routeValue.textContent =
       latinCity;
 
-    nodeValue.textContent =
-      generateNode(city);
+    updateNode();
+
+    nodeInterval = setInterval(() => {
+
+      updateNode();
+
+    }, 2000);
 
   } else {
 
