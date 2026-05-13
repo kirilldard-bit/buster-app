@@ -13,10 +13,10 @@ body {
 
   background-image:
     linear-gradient(
-      rgba(0,0,0,0.88),
-      rgba(0,0,0,0.94)
+      rgba(0,0,0,0.55),
+      rgba(0,0,0,0.72)
     ),
-    url('./assets/map.png');
+    url('./assets/map.png?v=4');
 
   background-size: cover;
   background-position: center;
