@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BUSTER</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="background-overlay"></div>
+  <div class="grid-overlay"></div>
+
+  <div class="app-container">
+
+    <div class="top-panel">
+
+      <div class="top-card">
+        <div class="card-title">STATUS</div>
+        <div class="card-value online">ACTIVE</div>
+      </div>
+
+      <div class="top-card">
+        <div class="card-title">NODE</div>
+        <div class="card-value">MSK-01</div>
+      </div>
+
+    </div>
+
+    <div class="logo">
+      BUSTER
+    </div>
+
+    <div class="timer" id="timer">
+      00:00:00
+    </div>
+
+    <div class="circle-wrapper">
+
+      <div class="circle-glow"></div>
+
+      <button class="power-button off" id="powerButton">
+        <span id="buttonIcon">⏻</span>
+      </button>
+
+    </div>
+
+    <div class="connection-status" id="statusText">
+      DISCONNECTED
+    </div>
+
+    <div class="stats-row">
+
+      <div class="stat-card">
+        <div class="stat-label">PING</div>
+        <div class="stat-value">24ms</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">ROUTE</div>
+        <div class="stat-value">Moscow</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">LOAD</div>
+        <div class="stat-value">12%</div>
+      </div>
+
+    </div>
+
+    <div class="bottom-nav">
+
+      <button class="nav-btn active">
+        Главная
+      </button>
+
+      <button class="nav-btn">
+        История
+      </button>
+
+      <button class="nav-btn">
+        Настройки
+      </button>
+
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+
+</body>
+</html>
