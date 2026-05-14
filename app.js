@@ -17,6 +17,23 @@ if (window.Telegram &&
 
 }
 
+const telegramUser =
+  tg?.initDataUnsafe?.user;
+
+if (telegramUser) {
+
+  console.log(
+    'TELEGRAM USER:',
+    telegramUser
+  );
+
+  console.log(
+    'TELEGRAM ID:',
+    telegramUser.id
+  );
+
+}
+
 const powerButton =
   document.getElementById('powerButton');
 
@@ -410,20 +427,3 @@ fetch(BACKEND_URL)
     );
 
   });
-
-const telegramUser =
-  tg?.initDataUnsafe?.user;
-
-if (telegramUser) {
-
-  console.log(
-    'TELEGRAM USER:',
-    telegramUser
-  );
-
-  console.log(
-    'TELEGRAM ID:',
-    telegramUser.id
-  );
-
-}
