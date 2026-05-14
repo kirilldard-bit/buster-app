@@ -1,3 +1,7 @@
+console.log("WINDOW TELEGRAM:", window.Telegram);
+console.log("WEBAPP:", window.Telegram?.WebApp);
+console.log("INIT DATA:", window.Telegram?.WebApp?.initDataUnsafe);
+
 const BACKEND_URL =
   'https://bus-backend-production-1f45.up.railway.app';
 
