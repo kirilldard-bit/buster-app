@@ -1,3 +1,6 @@
+const BACKEND_URL =
+  'https://bus-backend-production-1f45.up.railway.app';
+
 const powerButton =
   document.getElementById('powerButton');
 
@@ -372,3 +375,22 @@ powerButton.addEventListener('click', () => {
   }
 
 });
+
+fetch(BACKEND_URL)
+  .then(res => res.json())
+  .then(data => {
+
+    console.log(
+      'BACKEND STATUS:',
+      data.status
+    );
+
+  })
+  .catch(err => {
+
+    console.error(
+      'BACKEND ERROR:',
+      err
+    );
+
+  });
