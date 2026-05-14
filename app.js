@@ -1,11 +1,6 @@
 const BACKEND_URL =
   'https://bus-backend-production-1f45.up.railway.app';
 
-const tg =
-  window.Telegram.WebApp;
-
-tg.expand();
-
 const powerButton =
   document.getElementById('powerButton');
 
@@ -399,20 +394,3 @@ fetch(BACKEND_URL)
     );
 
   });
-
-const telegramUser =
-  tg.initDataUnsafe?.user;
-
-if (telegramUser) {
-
-  console.log(
-    'TELEGRAM USER:',
-    telegramUser
-  );
-
-  console.log(
-    'TELEGRAM ID:',
-    telegramUser.id
-  );
-
-}
