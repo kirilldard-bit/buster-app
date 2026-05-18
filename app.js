@@ -145,10 +145,6 @@ setTimeout(() => {
 
         await saveUserData();
 
-        tg.showAlert(
-          'ДАННЫЕ СОХРАНЕНЫ'
-        );
-
       };
 
     settingsScreen.appendChild(
@@ -183,6 +179,11 @@ async function saveUserData() {
       payload
     );
 
+    alert(
+      'ОТПРАВКА:\n' +
+      JSON.stringify(payload, null, 2)
+    );
+
     const response = await fetch(
       `${BACKEND_URL}/save-user`,
       {
@@ -200,16 +201,32 @@ async function saveUserData() {
       }
     );
 
+    alert(
+      'STATUS: ' + response.status
+    );
+
     const result =
       await response.json();
 
-    if (result.success) {
+    alert(
+      JSON.stringify(result)
+    );
+
+    if (response.ok && result.success) {
+
+      tg.showAlert(
+        'ДАННЫЕ СОХРАНЕНЫ'
+      );
 
       console.log(
         'USER SAVED'
       );
 
     } else {
+
+      tg.showAlert(
+        'ОШИБКА СОХРАНЕНИЯ'
+      );
 
       console.error(
         'SAVE FAILED',
@@ -218,16 +235,15 @@ async function saveUserData() {
 
     }
 
-    console.log(
-      'SAVE RESULT:',
-      result
-    );
-
   } catch (err) {
 
     console.error(
       'SAVE USER ERROR:',
       err
+    );
+
+    alert(
+      'FETCH ERROR:\n' + err.message
     );
 
   }
@@ -347,216 +363,8 @@ function updateNode() {
     nodeValue.textContent =
       generateNode(city);
   }
+
 }
-
-function addConsoleLine() {
-
-  const line =
-    document.createElement('div');
-
-  line.classList.add('console-line');
-
-  const currentTime =
-    new Date().toLocaleTimeString('ru-RU');
-
-  const randomLog =
-    logs[
-      Math.floor(Math.random() * logs.length)
-    ];
-
-  line.textContent =
-    `[${currentTime}] ${randomLog}`;
-
-  consoleWindow.prepend(line);
-
-  const lines =
-    document.querySelectorAll('.console-line');
-
-  if (lines.length > 18) {
-
-    lines[
-      lines.length - 1
-    ].remove();
-  }
-}
-
-function hideAllScreens() {
-
-  homeScreen.classList.remove(
-    'active-screen'
-  );
-
-  historyScreen.classList.remove(
-    'active-screen'
-  );
-
-  settingsScreen.classList.remove(
-    'active-screen'
-  );
-
-  homeTab.classList.remove('active');
-
-  historyTab.classList.remove('active');
-
-  settingsTab.classList.remove('active');
-}
-
-homeTab.addEventListener('click', () => {
-
-  hideAllScreens();
-
-  homeScreen.classList.add(
-    'active-screen'
-  );
-
-  homeTab.classList.add('active');
-});
-
-historyTab.addEventListener('click', () => {
-
-  hideAllScreens();
-
-  historyScreen.classList.add(
-    'active-screen'
-  );
-
-  historyTab.classList.add('active');
-});
-
-settingsTab.addEventListener('click', () => {
-
-  hideAllScreens();
-
-  settingsScreen.classList.add(
-    'active-screen'
-  );
-
-  settingsTab.classList.add('active');
-});
-
-cityInput.addEventListener('input', () => {
-
-  const city =
-    cityInput.value.trim();
-
-  clearInterval(nodeInterval);
-
-  if (city.length > 0) {
-
-    const latinCity =
-      transliterate(city);
-
-    routeValue.textContent =
-      latinCity;
-
-    updateNode();
-
-    nodeInterval = setInterval(() => {
-
-      updateNode();
-
-    }, 2000);
-
-  } else {
-
-    routeValue.textContent =
-      'Moscow';
-
-    nodeValue.textContent =
-      'MSK-01';
-  }
-
-});
-
-powerButton.addEventListener('click', () => {
-
-  enabled = !enabled;
-
-  if (enabled) {
-
-    powerButton.classList.remove('off');
-
-    powerButton.classList.add('on');
-
-    buttonIcon.textContent = '✓';
-
-    statusText.textContent =
-      'CONNECTED';
-
-    statusValue.textContent =
-      'ACTIVE';
-
-    statusValue.classList.remove(
-      'disconnected'
-    );
-
-    statusValue.classList.add(
-      'online'
-    );
-
-    glow.style.background =
-      'radial-gradient(circle, rgba(139,92,246,0.35), transparent 70%)';
-
-    interval = setInterval(() => {
-
-      seconds++;
-
-      timer.textContent =
-        formatTime(seconds);
-
-    }, 1000);
-
-    pingValue.textContent =
-      `${randomPing()}ms`;
-
-    pingInterval = setInterval(() => {
-
-      pingValue.textContent =
-        `${randomPing()}ms`;
-
-    }, 2000);
-
-    addConsoleLine();
-
-    consoleInterval = setInterval(() => {
-
-      addConsoleLine();
-
-    }, 1800);
-
-  } else {
-
-    powerButton.classList.remove('on');
-
-    powerButton.classList.add('off');
-
-    buttonIcon.textContent = '⏻';
-
-    statusText.textContent =
-      'DISCONNECTED';
-
-    statusValue.textContent =
-      'DISCONNECTED';
-
-    statusValue.classList.remove(
-      'online'
-    );
-
-    statusValue.classList.add(
-      'disconnected'
-    );
-
-    glow.style.background =
-      'radial-gradient(circle, rgba(255,196,0,0.18), transparent 70%)';
-
-    clearInterval(interval);
-
-    clearInterval(pingInterval);
-
-    clearInterval(consoleInterval);
-  }
-
-});
 
 fetch(BACKEND_URL)
   .then(res => res.text())
