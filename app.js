@@ -1,13 +1,3 @@
-const tg = window.Telegram?.WebApp;
-
-tg?.ready();
-tg?.expand();
-
-console.log("TG:", tg);
-console.log("INIT DATA:", tg?.initDataUnsafe);
-console.log("USER:", tg?.initDataUnsafe?.user);
-console.log("USER ID:", tg?.initDataUnsafe?.user?.id);
-
 console.log("WINDOW TELEGRAM:", window.Telegram);
 console.log("WEBAPP:", window.Telegram?.WebApp);
 console.log("INIT DATA:", window.Telegram?.WebApp?.initDataUnsafe);
@@ -23,6 +13,7 @@ if (window.Telegram &&
   tg =
     window.Telegram.WebApp;
 
+  tg.ready();
   tg.expand();
 
 }
@@ -30,19 +21,15 @@ if (window.Telegram &&
 const telegramUser =
   tg?.initDataUnsafe?.user;
 
-if (telegramUser) {
+console.log(
+  'TELEGRAM USER:',
+  telegramUser
+);
 
-  console.log(
-    'TELEGRAM USER:',
-    telegramUser
-  );
-
-  console.log(
-    'TELEGRAM ID:',
-    telegramUser.id
-  );
-
-}
+console.log(
+  'TELEGRAM ID:',
+  telegramUser?.id
+);
 
 const powerButton =
   document.getElementById('powerButton');
