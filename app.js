@@ -1,24 +1,10 @@
-alert("NEW VERSION LOADED");
+const tg = window.Telegram.WebApp;
 
-const tg = window.Telegram?.WebApp;
+tg.ready();
 
-let telegramUserId = "NOT FOUND";
+tg.expand();
 
-if (tg) {
-
-  tg.ready();
-
-  tg.expand();
-
-  const user = tg.initDataUnsafe?.user;
-
-  if (user?.id) {
-
-    telegramUserId = user.id;
-
-  }
-
-}
+alert(JSON.stringify(tg.initDataUnsafe));
 
 const BACKEND_URL =
   'https://bus-backend-production-1f45.up.railway.app';
@@ -73,23 +59,6 @@ const routeValue =
 
 const nodeValue =
   document.getElementById('nodeValue');
-
-const routeCard =
-  document.querySelector('.route-card');
-
-if (routeCard) {
-
-  routeCard.innerHTML = `
-    <div class="label">
-      TELEGRAM ID
-    </div>
-
-    <div class="value">
-      ${telegramUserId}
-    </div>
-  `;
-
-}
 
 let enabled = false;
 
