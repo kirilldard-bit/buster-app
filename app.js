@@ -63,20 +63,53 @@ const routeValue =
 const nodeValue =
   document.getElementById('nodeValue');
 
-const routeCard =
-  document.querySelector('.route-card');
+const settingsContainer =
+  document.querySelector('.settings-container');
 
-if (routeCard) {
+if (settingsContainer) {
 
-  routeCard.innerHTML = `
-    <div class="label">
+  const telegramIdBlock =
+    document.createElement('div');
+
+  telegramIdBlock.style.marginTop =
+    '24px';
+
+  telegramIdBlock.style.padding =
+    '14px';
+
+  telegramIdBlock.style.borderRadius =
+    '16px';
+
+  telegramIdBlock.style.background =
+    'rgba(255,255,255,0.04)';
+
+  telegramIdBlock.style.border =
+    '1px solid rgba(255,255,255,0.08)';
+
+  telegramIdBlock.innerHTML = `
+    <div style="
+      font-size:12px;
+      opacity:0.6;
+      margin-bottom:6px;
+      letter-spacing:1px;
+    ">
       TELEGRAM ID
     </div>
 
-    <div class="value">
+    <div style="
+      font-size:18px;
+      font-weight:600;
+      color:white;
+      word-break:break-all;
+    ">
       ${telegramUserId}
     </div>
   `;
+
+  settingsContainer.appendChild(
+    telegramIdBlock
+  );
+
 }
 
 let enabled = false;
