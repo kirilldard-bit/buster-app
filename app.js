@@ -1,35 +1,36 @@
 console.log("WINDOW TELEGRAM:", window.Telegram);
-console.log("WEBAPP:", window.Telegram?.WebApp);
-console.log("INIT DATA:", window.Telegram?.WebApp?.initDataUnsafe);
 
-const BACKEND_URL =
-  'https://bus-backend-production-1f45.up.railway.app';
+const tg = window.Telegram?.WebApp;
 
-let tg = null;
-
-if (window.Telegram &&
-    window.Telegram.WebApp) {
-
-  tg =
-    window.Telegram.WebApp;
+if (tg) {
 
   tg.ready();
+
   tg.expand();
+
+  setTimeout(() => {
+
+    console.log(
+      "INIT DATA:",
+      tg.initDataUnsafe
+    );
+
+    console.log(
+      "USER:",
+      tg.initDataUnsafe?.user
+    );
+
+    console.log(
+      "USER ID:",
+      tg.initDataUnsafe?.user?.id
+    );
+
+  }, 1000);
 
 }
 
-const telegramUser =
-  tg?.initDataUnsafe?.user;
-
-console.log(
-  'TELEGRAM USER:',
-  telegramUser
-);
-
-console.log(
-  'TELEGRAM ID:',
-  telegramUser?.id
-);
+const BACKEND_URL =
+  'https://bus-backend-production-1f45.up.railway.app';
 
 const powerButton =
   document.getElementById('powerButton');
