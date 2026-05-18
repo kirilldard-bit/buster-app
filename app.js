@@ -1,3 +1,5 @@
+alert("NEW VERSION LOADED");
+
 const tg = window.Telegram?.WebApp;
 
 let telegramUserId = "NOT FOUND";
@@ -8,8 +10,7 @@ if (tg) {
 
   tg.expand();
 
-  const user =
-    tg.initDataUnsafe?.user;
+  const user = tg.initDataUnsafe?.user;
 
   if (user?.id) {
 
@@ -87,6 +88,7 @@ if (routeCard) {
       ${telegramUserId}
     </div>
   `;
+
 }
 
 let enabled = false;
