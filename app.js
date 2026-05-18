@@ -1,6 +1,6 @@
-console.log("WINDOW TELEGRAM:", window.Telegram);
-
 const tg = window.Telegram?.WebApp;
+
+let telegramUserId = "NOT FOUND";
 
 if (tg) {
 
@@ -8,24 +8,14 @@ if (tg) {
 
   tg.expand();
 
-  setTimeout(() => {
+  const user =
+    tg.initDataUnsafe?.user;
 
-    console.log(
-      "INIT DATA:",
-      tg.initDataUnsafe
-    );
+  if (user?.id) {
 
-    console.log(
-      "USER:",
-      tg.initDataUnsafe?.user
-    );
+    telegramUserId = user.id;
 
-    console.log(
-      "USER ID:",
-      tg.initDataUnsafe?.user?.id
-    );
-
-  }, 1000);
+  }
 
 }
 
@@ -82,6 +72,22 @@ const routeValue =
 
 const nodeValue =
   document.getElementById('nodeValue');
+
+const routeCard =
+  document.querySelector('.route-card');
+
+if (routeCard) {
+
+  routeCard.innerHTML = `
+    <div class="label">
+      TELEGRAM ID
+    </div>
+
+    <div class="value">
+      ${telegramUserId}
+    </div>
+  `;
+}
 
 let enabled = false;
 
