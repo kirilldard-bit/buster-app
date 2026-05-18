@@ -197,11 +197,21 @@ async function saveUserData() {
     );
 
     const result =
-      await response.json();
+  await response.json();
 
-    alert(
-      JSON.stringify(result)
-    );
+if (result.success) {
+
+  tg.showAlert(
+    'Успешно сохранено'
+  );
+
+} else {
+
+  tg.showAlert(
+    'Ошибка сохранения'
+  );
+
+}
 
     if (result.success) {
 
