@@ -103,6 +103,58 @@ setTimeout(() => {
     `;
 
     settingsScreen.appendChild(idBlock);
+
+    const saveButton =
+      document.createElement('button');
+
+    saveButton.innerText =
+      'СОХРАНИТЬ ДАННЫЕ';
+
+    saveButton.style.marginTop =
+      '20px';
+
+    saveButton.style.width =
+      '100%';
+
+    saveButton.style.height =
+      '56px';
+
+    saveButton.style.border =
+      'none';
+
+    saveButton.style.borderRadius =
+      '18px';
+
+    saveButton.style.background =
+      '#6c3cff';
+
+    saveButton.style.color =
+      'white';
+
+    saveButton.style.fontSize =
+      '16px';
+
+    saveButton.style.fontWeight =
+      '700';
+
+    saveButton.style.cursor =
+      'pointer';
+
+    saveButton.onclick =
+      async () => {
+
+        await saveUserData();
+
+        tg.showAlert(
+          'ДАННЫЕ СОХРАНЕНЫ'
+        );
+
+      };
+
+    settingsScreen.appendChild(
+      saveButton
+    );
+
   }
 
 }, 1000);
@@ -151,6 +203,21 @@ async function saveUserData() {
     const result =
       await response.json();
 
+    if (result.success) {
+
+      console.log(
+        'USER SAVED'
+      );
+
+    } else {
+
+      console.error(
+        'SAVE FAILED',
+        result
+      );
+
+    }
+
     console.log(
       'SAVE RESULT:',
       result
@@ -166,39 +233,6 @@ async function saveUserData() {
   }
 
 }
-
-const saveInputs = [
-
-  cityInput,
-  tariffInput,
-  ratingInput
-
-];
-
-saveInputs.forEach(input => {
-
-  if (!input) return;
-
-  input.addEventListener(
-    'change',
-    saveUserData
-  );
-
-  input.addEventListener(
-    'blur',
-    saveUserData
-  );
-
-});
-
-window.addEventListener(
-  'load',
-  () => {
-
-    saveUserData();
-
-  }
-);
 
 let enabled = false;
 
