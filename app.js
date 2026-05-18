@@ -1,7 +1,6 @@
 const tg = window.Telegram.WebApp;
 
 tg.ready();
-
 tg.expand();
 
 const telegramUser = tg.initDataUnsafe?.user;
@@ -54,6 +53,21 @@ const historyScreen =
 const settingsScreen =
   document.getElementById('settingsScreen');
 
+const cityInput =
+  document.getElementById('cityInput');
+
+const tariffInput =
+  document.getElementById('tariffInput');
+
+const ratingInput =
+  document.getElementById('ratingInput');
+
+const routeValue =
+  document.getElementById('routeValue');
+
+const nodeValue =
+  document.getElementById('nodeValue');
+
 setTimeout(() => {
 
   if (settingsScreen) {
@@ -93,14 +107,98 @@ setTimeout(() => {
 
 }, 1000);
 
-const cityInput =
-  document.getElementById('cityInput');
+async function saveUserData() {
 
-const routeValue =
-  document.getElementById('routeValue');
+  try {
 
-const nodeValue =
-  document.getElementById('nodeValue');
+    const payload = {
+
+      telegram_id: telegramUserId,
+
+      city:
+        cityInput?.value || '',
+
+      tariff:
+        tariffInput?.value || '',
+
+      rating:
+        ratingInput?.value || ''
+
+    };
+
+    console.log(
+      'SENDING USER:',
+      payload
+    );
+
+    const response = await fetch(
+      `${BACKEND_URL}/save-user`,
+      {
+
+        method: 'POST',
+
+        headers: {
+          'Content-Type':
+            'application/json'
+        },
+
+        body:
+          JSON.stringify(payload)
+
+      }
+    );
+
+    const result =
+      await response.json();
+
+    console.log(
+      'SAVE RESULT:',
+      result
+    );
+
+  } catch (err) {
+
+    console.error(
+      'SAVE USER ERROR:',
+      err
+    );
+
+  }
+
+}
+
+const saveInputs = [
+
+  cityInput,
+  tariffInput,
+  ratingInput
+
+];
+
+saveInputs.forEach(input => {
+
+  if (!input) return;
+
+  input.addEventListener(
+    'change',
+    saveUserData
+  );
+
+  input.addEventListener(
+    'blur',
+    saveUserData
+  );
+
+});
+
+window.addEventListener(
+  'load',
+  () => {
+
+    saveUserData();
+
+  }
+);
 
 let enabled = false;
 
@@ -427,12 +525,12 @@ powerButton.addEventListener('click', () => {
 });
 
 fetch(BACKEND_URL)
-  .then(res => res.json())
+  .then(res => res.text())
   .then(data => {
 
     console.log(
       'BACKEND STATUS:',
-      data.status
+      data
     );
 
   })
