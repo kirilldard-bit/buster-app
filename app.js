@@ -68,153 +68,7 @@ const routeValue =
 const nodeValue =
   document.getElementById('nodeValue');
 
-setTimeout(() => {
-
-  if (settingsScreen) {
-
-    const idBlock =
-      document.createElement('div');
-
-    idBlock.innerHTML = `
-      <div style="
-        margin-top:20px;
-        padding:16px;
-        border-radius:18px;
-        background:rgba(255,255,255,0.04);
-        border:1px solid rgba(255,255,255,0.08);
-      ">
-        <div style="
-          font-size:12px;
-          opacity:0.6;
-          margin-bottom:8px;
-          letter-spacing:1px;
-        ">
-          TELEGRAM ID
-        </div>
-
-        <div style="
-          font-size:20px;
-          font-weight:700;
-          color:white;
-        ">
-          ${telegramUserId}
-        </div>
-      </div>
-    `;
-
-    settingsScreen.appendChild(idBlock);
-
-    const saveButton =
-      document.createElement('button');
-
-    saveButton.innerText =
-      'СОХРАНИТЬ ДАННЫЕ';
-
-    saveButton.style.marginTop =
-      '20px';
-
-    saveButton.style.width =
-      '100%';
-
-    saveButton.style.height =
-      '56px';
-
-    saveButton.style.border =
-      'none';
-
-    saveButton.style.borderRadius =
-      '18px';
-
-    saveButton.style.background =
-      '#6c3cff';
-
-    saveButton.style.color =
-      'white';
-
-    saveButton.style.fontSize =
-      '16px';
-
-    saveButton.style.fontWeight =
-      '700';
-
-    saveButton.style.cursor =
-      'pointer';
-
-    saveButton.onclick =
-      async () => {
-
-        await saveUserData();
-
-      };
-
-    settingsScreen.appendChild(
-      saveButton
-    );
-
-  }
-
-}, 1000);
-
-async function saveUserData() {
-
-  try {
-
-    const payload = {
-
-      telegram_id: telegramUserId,
-
-      city:
-        cityInput?.value || '',
-
-      tariff:
-        tariffInput?.value || '',
-
-      rating:
-        ratingInput?.value || ''
-
-    };
-
-    const response = await fetch(
-      `${BACKEND_URL}/save-user`,
-      {
-
-        method: 'POST',
-
-        headers: {
-          'Content-Type':
-            'application/json'
-        },
-
-        body:
-          JSON.stringify(payload)
-
-      }
-    );
-
-    const result =
-      await response.json();
-
-    if (result.success) {
-
-      tg.showAlert(
-        'Успешно сохранено'
-      );
-
-    } else {
-
-      tg.showAlert(
-        'Ошибка сохранения'
-      );
-
-    }
-
-  } catch (err) {
-
-    console.error(err);
-
-  }
-
-}
+// ===== SUBSCRIPTION =====
 
 async function checkSubscription() {
 
@@ -339,11 +193,220 @@ function openPayment() {
 
 }
 
+setTimeout(() => {
+
+  if (settingsScreen) {
+
+    const idBlock =
+      document.createElement('div');
+
+    idBlock.innerHTML = `
+      <div style="
+        margin-top:20px;
+        padding:16px;
+        border-radius:18px;
+        background:rgba(255,255,255,0.04);
+        border:1px solid rgba(255,255,255,0.08);
+      ">
+        <div style="
+          font-size:12px;
+          opacity:0.6;
+          margin-bottom:8px;
+          letter-spacing:1px;
+        ">
+          TELEGRAM ID
+        </div>
+
+        <div style="
+          font-size:20px;
+          font-weight:700;
+          color:white;
+        ">
+          ${telegramUserId}
+        </div>
+      </div>
+    `;
+
+    settingsScreen.appendChild(idBlock);
+
+    const saveButton =
+      document.createElement('button');
+
+    saveButton.innerText =
+      'СОХРАНИТЬ ДАННЫЕ';
+
+    saveButton.style.marginTop =
+      '20px';
+
+    saveButton.style.width =
+      '100%';
+
+    saveButton.style.height =
+      '56px';
+
+    saveButton.style.border =
+      'none';
+
+    saveButton.style.borderRadius =
+      '18px';
+
+    saveButton.style.background =
+      '#6c3cff';
+
+    saveButton.style.color =
+      'white';
+
+    saveButton.style.fontSize =
+      '16px';
+
+    saveButton.style.fontWeight =
+      '700';
+
+    saveButton.style.cursor =
+      'pointer';
+
+    saveButton.onclick =
+      async () => {
+
+        await saveUserData();
+
+      };
+
+    settingsScreen.appendChild(
+      saveButton
+    );
+
+  }
+
+}, 1000);
+
+async function saveUserData() {
+
+  try {
+
+    const payload = {
+
+      telegram_id: telegramUserId,
+
+      city:
+        cityInput?.value || '',
+
+      tariff:
+        tariffInput?.value || '',
+
+      rating:
+        ratingInput?.value || ''
+
+    };
+
+    console.log(
+      'SENDING USER:',
+      payload
+    );
+
+    const response = await fetch(
+      `${BACKEND_URL}/save-user`,
+      {
+
+        method: 'POST',
+
+        headers: {
+          'Content-Type':
+            'application/json'
+        },
+
+        body:
+          JSON.stringify(payload)
+
+      }
+    );
+
+    const result =
+      await response.json();
+
+    if (result.success) {
+
+      tg.showAlert(
+        'Успешно сохранено'
+      );
+
+    } else {
+
+      tg.showAlert(
+        'Ошибка сохранения'
+      );
+
+    }
+
+  } catch (err) {
+
+    console.error(
+      'SAVE USER ERROR:',
+      err
+    );
+
+  }
+
+}
+
 let enabled = false;
 
 let seconds = 0;
 
 let interval = null;
+
+let pingInterval = null;
+
+let consoleInterval = null;
+
+let nodeInterval = null;
+
+const logs = [
+
+  'secure tunnel initialized...',
+  'routing package established...',
+  'node synchronization complete...',
+  'latency optimization enabled...',
+  'route encrypted successfully...',
+  'system heartbeat detected...',
+  'proxy channel updated...',
+  'dynamic node allocation active...',
+  'network mask injected...',
+  'secure route confirmed...',
+  'packet stream stabilized...',
+  'endpoint verified...',
+  'secure dns route applied...',
+  'traffic rerouted successfully...'
+
+];
+
+const translitMap = {
+
+  'а':'a','б':'b','в':'v','г':'g',
+  'д':'d','е':'e','ё':'e','ж':'zh',
+  'з':'z','и':'i','й':'y','к':'k',
+  'л':'l','м':'m','н':'n','о':'o',
+  'п':'p','р':'r','с':'s','т':'t',
+  'у':'u','ф':'f','х':'h','ц':'ts',
+  'ч':'ch','ш':'sh','щ':'sch',
+  'ъ':'','ы':'y','ь':'',
+  'э':'e','ю':'yu','я':'ya'
+
+};
+
+function transliterate(text) {
+
+  const transliterated = text
+    .toLowerCase()
+    .split('')
+    .map(char =>
+      translitMap[char] || char
+    )
+    .join('');
+
+  return transliterated.charAt(0).toUpperCase() +
+    transliterated.slice(1);
+}
 
 function formatTime(sec) {
 
@@ -360,10 +423,168 @@ function formatTime(sec) {
   ).padStart(2, '0');
 
   return `${hrs}:${mins}:${secs}`;
-
 }
 
-powerButton?.addEventListener('click', () => {
+function randomPing() {
+
+  return Math.floor(
+    Math.random() * (127 - 13 + 1)
+  ) + 13;
+}
+
+function randomNodeNumber() {
+
+  return String(
+    Math.floor(Math.random() * 9) + 1
+  ).padStart(2, '0');
+}
+
+function generateNode(city) {
+
+  const latin =
+    transliterate(city);
+
+  const clean =
+    latin
+      .replace(/[^a-zA-Z]/g, '')
+      .substring(0, 3)
+      .toUpperCase();
+
+  return `${clean}-${randomNodeNumber()}`;
+}
+
+function updateNode() {
+
+  const city =
+    cityInput.value.trim();
+
+  if (city.length > 0) {
+
+    nodeValue.textContent =
+      generateNode(city);
+  }
+}
+
+function addConsoleLine() {
+
+  const line =
+    document.createElement('div');
+
+  line.classList.add('console-line');
+
+  const currentTime =
+    new Date().toLocaleTimeString('ru-RU');
+
+  const randomLog =
+    logs[
+      Math.floor(Math.random() * logs.length)
+    ];
+
+  line.textContent =
+    `[${currentTime}] ${randomLog}`;
+
+  consoleWindow.prepend(line);
+
+  const lines =
+    document.querySelectorAll('.console-line');
+
+  if (lines.length > 18) {
+
+    lines[
+      lines.length - 1
+    ].remove();
+  }
+}
+
+function hideAllScreens() {
+
+  homeScreen.classList.remove(
+    'active-screen'
+  );
+
+  historyScreen.classList.remove(
+    'active-screen'
+  );
+
+  settingsScreen.classList.remove(
+    'active-screen'
+  );
+
+  homeTab.classList.remove('active');
+
+  historyTab.classList.remove('active');
+
+  settingsTab.classList.remove('active');
+}
+
+homeTab.addEventListener('click', () => {
+
+  hideAllScreens();
+
+  homeScreen.classList.add(
+    'active-screen'
+  );
+
+  homeTab.classList.add('active');
+});
+
+historyTab.addEventListener('click', () => {
+
+  hideAllScreens();
+
+  historyScreen.classList.add(
+    'active-screen'
+  );
+
+  historyTab.classList.add('active');
+});
+
+settingsTab.addEventListener('click', () => {
+
+  hideAllScreens();
+
+  settingsScreen.classList.add(
+    'active-screen'
+  );
+
+  settingsTab.classList.add('active');
+});
+
+cityInput.addEventListener('input', () => {
+
+  const city =
+    cityInput.value.trim();
+
+  clearInterval(nodeInterval);
+
+  if (city.length > 0) {
+
+    const latinCity =
+      transliterate(city);
+
+    routeValue.textContent =
+      latinCity;
+
+    updateNode();
+
+    nodeInterval = setInterval(() => {
+
+      updateNode();
+
+    }, 2000);
+
+  } else {
+
+    routeValue.textContent =
+      'Moscow';
+
+    nodeValue.textContent =
+      'MSK-01';
+  }
+
+});
+
+powerButton.addEventListener('click', () => {
 
   enabled = !enabled;
 
@@ -381,6 +602,17 @@ powerButton?.addEventListener('click', () => {
     statusValue.textContent =
       'ACTIVE';
 
+    statusValue.classList.remove(
+      'disconnected'
+    );
+
+    statusValue.classList.add(
+      'online'
+    );
+
+    glow.style.background =
+      'radial-gradient(circle, rgba(139,92,246,0.35), transparent 70%)';
+
     interval = setInterval(() => {
 
       seconds++;
@@ -389,6 +621,24 @@ powerButton?.addEventListener('click', () => {
         formatTime(seconds);
 
     }, 1000);
+
+    pingValue.textContent =
+      `${randomPing()}ms`;
+
+    pingInterval = setInterval(() => {
+
+      pingValue.textContent =
+        `${randomPing()}ms`;
+
+    }, 2000);
+
+    addConsoleLine();
+
+    consoleInterval = setInterval(() => {
+
+      addConsoleLine();
+
+    }, 1800);
 
   } else {
 
@@ -404,11 +654,27 @@ powerButton?.addEventListener('click', () => {
     statusValue.textContent =
       'DISCONNECTED';
 
+    statusValue.classList.remove(
+      'online'
+    );
+
+    statusValue.classList.add(
+      'disconnected'
+    );
+
+    glow.style.background =
+      'radial-gradient(circle, rgba(255,196,0,0.18), transparent 70%)';
+
     clearInterval(interval);
 
+    clearInterval(pingInterval);
+
+    clearInterval(consoleInterval);
   }
 
 });
+
+// ===== START =====
 
 checkSubscription();
 
@@ -424,6 +690,9 @@ fetch(BACKEND_URL)
   })
   .catch(err => {
 
-    console.error(err);
+    console.error(
+      'BACKEND ERROR:',
+      err
+    );
 
   });
