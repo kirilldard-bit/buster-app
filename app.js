@@ -1,3 +1,52 @@
+const tg = window.Telegram?.WebApp;
+
+tg?.ready();
+tg?.expand();
+
+const user = tg?.initDataUnsafe?.user;
+
+if (user) {
+
+  document.body.innerHTML += `
+    <div style="
+      position:fixed;
+      top:20px;
+      left:20px;
+      z-index:999999;
+      background:#000;
+      color:#00ff66;
+      padding:15px;
+      border-radius:12px;
+      font-size:22px;
+      font-weight:bold;
+    ">
+      TELEGRAM ID: ${user.id}
+    </div>
+  `;
+
+  console.log("USER:", user);
+
+} else {
+
+  document.body.innerHTML += `
+    <div style="
+      position:fixed;
+      top:20px;
+      left:20px;
+      z-index:999999;
+      background:red;
+      color:white;
+      padding:15px;
+      border-radius:12px;
+      font-size:22px;
+      font-weight:bold;
+    ">
+      USER NOT FOUND
+    </div>
+  `;
+
+}
+
 console.log("WINDOW TELEGRAM:", window.Telegram);
 console.log("WEBAPP:", window.Telegram?.WebApp);
 console.log("INIT DATA:", window.Telegram?.WebApp?.initDataUnsafe);
