@@ -57,10 +57,10 @@ const cityInput =
   document.getElementById('cityInput');
 
 const tariffInput =
-  document.getElementById('tariffInput');
+  document.querySelectorAll('input')[1];
 
 const ratingInput =
-  document.getElementById('ratingInput');
+  document.querySelectorAll('input')[2];
 
 const routeValue =
   document.getElementById('routeValue');
