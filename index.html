@@ -2,7 +2,10 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
@@ -10,12 +13,15 @@
 
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
   <div class="background-overlay"></div>
   <div class="grid-overlay"></div>
 
   <div class="app-container">
+
+    <!-- TOP PANEL -->
 
     <div class="top-panel">
 
@@ -53,13 +59,19 @@
 
     <!-- HOME SCREEN -->
 
-    <div class="screen active-screen" id="homeScreen">
+    <div
+      class="screen active-screen"
+      id="homeScreen"
+    >
 
       <div class="logo">
         BUSTER
       </div>
 
-      <div class="timer" id="timer">
+      <div
+        class="timer"
+        id="timer"
+      >
         00:00:00
       </div>
 
@@ -71,7 +83,9 @@
           class="power-button off"
           id="powerButton"
         >
-          <span id="buttonIcon">⏻</span>
+          <span id="buttonIcon">
+            ⏻
+          </span>
         </button>
 
       </div>
@@ -130,7 +144,10 @@
 
     <!-- HISTORY SCREEN -->
 
-    <div class="screen" id="historyScreen">
+    <div
+      class="screen"
+      id="historyScreen"
+    >
 
       <div class="history-header">
         SYSTEM LOGS
@@ -146,13 +163,18 @@
 
     <!-- STATS SCREEN -->
 
-    <div class="screen" id="statsScreen">
+    <div
+      class="screen"
+      id="statsScreen"
+    >
 
       <div class="settings-header">
         СТАТИСТИКА
       </div>
 
       <div class="stats-container">
+
+        <!-- ECONOM -->
 
         <div class="stats-item">
 
@@ -169,6 +191,8 @@
 
         </div>
 
+        <!-- COMFORT -->
+
         <div class="stats-item">
 
           <div class="stats-tariff">
@@ -183,6 +207,8 @@
           </div>
 
         </div>
+
+        <!-- COMFORT PLUS -->
 
         <div class="stats-item">
 
@@ -199,6 +225,8 @@
 
         </div>
 
+        <!-- RESET BUTTON -->
+
         <button
           class="reset-btn"
           id="resetStatsButton"
@@ -206,39 +234,44 @@
           СБРОСИТЬ СТАТИСТИКУ
         </button>
 
-<button
-  id="openOrdersHistory"
-  class="stats-history-btn"
->
-  ИСТОРИЯ ЗАКАЗОВ
-</button>
+        <!-- ORDERS HISTORY BUTTON -->
+
+        <button
+          id="openOrdersHistory"
+          class="stats-history-btn"
+        >
+          ИСТОРИЯ ЗАКАЗОВ
+        </button>
 
       </div>
 
     </div>
 
-<!-- ORDERS SCREEN -->
+    <!-- ORDERS SCREEN -->
 
-<div
-  class="screen"
-  id="ordersScreen"
->
+    <div
+      class="screen"
+      id="ordersScreen"
+    >
 
-  <div class="history-header">
-    ИСТОРИЯ ЗАКАЗОВ
-  </div>
+      <div class="history-header">
+        ИСТОРИЯ ЗАКАЗОВ
+      </div>
 
-  <div
-    id="analyticsContainer"
-    class="analytics-container"
-  >
-  </div>
+      <div
+        id="analyticsContainer"
+        class="analytics-container"
+      >
+      </div>
 
-</div>
+    </div>
 
     <!-- SETTINGS SCREEN -->
 
-    <div class="screen" id="settingsScreen">
+    <div
+      class="screen"
+      id="settingsScreen"
+    >
 
       <div class="settings-header">
         SETTINGS
