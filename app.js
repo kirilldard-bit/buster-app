@@ -11,6 +11,8 @@ const telegramUserId =
 const BACKEND_URL =
   'https://bus-backend-production-1f45.up.railway.app';
 
+// ===== ELEMENTS =====
+
 const powerButton =
   document.getElementById('powerButton');
 
@@ -68,6 +70,198 @@ const routeValue =
 const nodeValue =
   document.getElementById('nodeValue');
 
+// ===== CITY LIBRARY =====
+
+const russianCities = [
+
+  'Москва',
+  'Санкт-Петербург',
+  'Казань',
+  'Екатеринбург',
+  'Новосибирск',
+  'Краснодар',
+  'Сочи',
+  'Ростов-на-Дону',
+  'Нижний Новгород',
+  'Самара',
+  'Уфа',
+  'Челябинск',
+  'Омск',
+  'Пермь',
+  'Тюмень',
+  'Воронеж',
+  'Волгоград',
+  'Красноярск',
+  'Иркутск',
+  'Хабаровск',
+  'Владивосток',
+  'Тула',
+  'Калуга',
+  'Тверь',
+  'Ярославль',
+  'Томск',
+  'Барнаул',
+  'Кемерово',
+  'Саратов',
+  'Белгород'
+
+];
+
+const tariffs = [
+
+  'Эконом',
+  'Комфорт',
+  'Комфорт+'
+
+];
+
+function setupDropdown(input, items) {
+
+  const wrapper =
+    document.createElement('div');
+
+  wrapper.style.position = 'relative';
+
+  input.parentNode.insertBefore(
+    wrapper,
+    input
+  );
+
+  wrapper.appendChild(input);
+
+  const dropdown =
+    document.createElement('div');
+
+  dropdown.style.position = 'absolute';
+  dropdown.style.top = '58px';
+  dropdown.style.left = '0';
+  dropdown.style.width = '100%';
+  dropdown.style.background = '#111';
+  dropdown.style.border =
+    '1px solid rgba(255,255,255,0.08)';
+  dropdown.style.borderRadius = '16px';
+  dropdown.style.zIndex = '999';
+  dropdown.style.maxHeight = '220px';
+  dropdown.style.overflowY = 'auto';
+  dropdown.style.display = 'none';
+  dropdown.style.backdropFilter = 'blur(20px)';
+
+  wrapper.appendChild(dropdown);
+
+  function renderItems(filter = '') {
+
+    dropdown.innerHTML = '';
+
+    const filtered = items.filter(item =>
+      item.toLowerCase().includes(
+        filter.toLowerCase()
+      )
+    );
+
+    filtered.forEach(item => {
+
+      const option =
+        document.createElement('div');
+
+      option.innerText = item;
+
+      option.style.padding =
+        '14px 16px';
+
+      option.style.cursor =
+        'pointer';
+
+      option.style.borderBottom =
+        '1px solid rgba(255,255,255,0.04)';
+
+      option.style.color =
+        'white';
+
+      option.addEventListener(
+        'click',
+        () => {
+
+          input.value = item;
+
+          dropdown.style.display =
+            'none';
+
+          if (input === cityInput) {
+
+            const latinCity =
+              transliterate(item);
+
+            routeValue.textContent =
+              latinCity;
+
+            updateNode();
+
+          }
+
+        }
+      );
+
+      option.addEventListener(
+        'mouseenter',
+        () => {
+
+          option.style.background =
+            'rgba(108,60,255,0.15)';
+
+        }
+      );
+
+      option.addEventListener(
+        'mouseleave',
+        () => {
+
+          option.style.background =
+            'transparent';
+
+        }
+      );
+
+      dropdown.appendChild(option);
+
+    });
+
+  }
+
+  input.addEventListener('focus', () => {
+
+    renderItems(input.value);
+
+    dropdown.style.display =
+      'block';
+
+  });
+
+  input.addEventListener('input', () => {
+
+    renderItems(input.value);
+
+  });
+
+  document.addEventListener(
+    'click',
+    (e) => {
+
+      if (!wrapper.contains(e.target)) {
+
+        dropdown.style.display =
+          'none';
+
+      }
+
+    }
+  );
+
+}
+
+setupDropdown(cityInput, russianCities);
+
+setupDropdown(tariffInput, tariffs);
+
 // ===== SUBSCRIPTION =====
 
 async function checkSubscription() {
@@ -80,11 +274,6 @@ async function checkSubscription() {
 
     const result =
       await response.json();
-
-    console.log(
-      'SUBSCRIPTION:',
-      result
-    );
 
     if (!result.active) {
 
@@ -193,92 +382,7 @@ function openPayment() {
 
 }
 
-setTimeout(() => {
-
-  if (settingsScreen) {
-
-    const idBlock =
-      document.createElement('div');
-
-    idBlock.innerHTML = `
-      <div style="
-        margin-top:20px;
-        padding:16px;
-        border-radius:18px;
-        background:rgba(255,255,255,0.04);
-        border:1px solid rgba(255,255,255,0.08);
-      ">
-        <div style="
-          font-size:12px;
-          opacity:0.6;
-          margin-bottom:8px;
-          letter-spacing:1px;
-        ">
-          TELEGRAM ID
-        </div>
-
-        <div style="
-          font-size:20px;
-          font-weight:700;
-          color:white;
-        ">
-          ${telegramUserId}
-        </div>
-      </div>
-    `;
-
-    settingsScreen.appendChild(idBlock);
-
-    const saveButton =
-      document.createElement('button');
-
-    saveButton.innerText =
-      'СОХРАНИТЬ ДАННЫЕ';
-
-    saveButton.style.marginTop =
-      '20px';
-
-    saveButton.style.width =
-      '100%';
-
-    saveButton.style.height =
-      '56px';
-
-    saveButton.style.border =
-      'none';
-
-    saveButton.style.borderRadius =
-      '18px';
-
-    saveButton.style.background =
-      '#6c3cff';
-
-    saveButton.style.color =
-      'white';
-
-    saveButton.style.fontSize =
-      '16px';
-
-    saveButton.style.fontWeight =
-      '700';
-
-    saveButton.style.cursor =
-      'pointer';
-
-    saveButton.onclick =
-      async () => {
-
-        await saveUserData();
-
-      };
-
-    settingsScreen.appendChild(
-      saveButton
-    );
-
-  }
-
-}, 1000);
+// ===== SAVE USER =====
 
 async function saveUserData() {
 
@@ -298,11 +402,6 @@ async function saveUserData() {
         ratingInput?.value || ''
 
     };
-
-    console.log(
-      'SENDING USER:',
-      payload
-    );
 
     const response = await fetch(
       `${BACKEND_URL}/save-user`,
@@ -340,14 +439,67 @@ async function saveUserData() {
 
   } catch (err) {
 
-    console.error(
-      'SAVE USER ERROR:',
-      err
-    );
+    console.log(err);
 
   }
 
 }
+
+// ===== SAVE BUTTON =====
+
+setTimeout(() => {
+
+  if (settingsScreen) {
+
+    const saveButton =
+      document.createElement('button');
+
+    saveButton.innerText =
+      'СОХРАНИТЬ ДАННЫЕ';
+
+    saveButton.style.marginTop =
+      '20px';
+
+    saveButton.style.width =
+      '100%';
+
+    saveButton.style.height =
+      '56px';
+
+    saveButton.style.border =
+      'none';
+
+    saveButton.style.borderRadius =
+      '18px';
+
+    saveButton.style.background =
+      '#6c3cff';
+
+    saveButton.style.color =
+      'white';
+
+    saveButton.style.fontSize =
+      '16px';
+
+    saveButton.style.fontWeight =
+      '700';
+
+    saveButton.onclick =
+      async () => {
+
+        await saveUserData();
+
+      };
+
+    settingsScreen.appendChild(
+      saveButton
+    );
+
+  }
+
+}, 800);
+
+// ===== LOGIC =====
 
 let enabled = false;
 
@@ -370,13 +522,7 @@ const logs = [
   'route encrypted successfully...',
   'system heartbeat detected...',
   'proxy channel updated...',
-  'dynamic node allocation active...',
-  'network mask injected...',
-  'secure route confirmed...',
-  'packet stream stabilized...',
-  'endpoint verified...',
-  'secure dns route applied...',
-  'traffic rerouted successfully...'
+  'dynamic node allocation active...'
 
 ];
 
@@ -406,6 +552,7 @@ function transliterate(text) {
 
   return transliterated.charAt(0).toUpperCase() +
     transliterated.slice(1);
+
 }
 
 function formatTime(sec) {
@@ -423,6 +570,7 @@ function formatTime(sec) {
   ).padStart(2, '0');
 
   return `${hrs}:${mins}:${secs}`;
+
 }
 
 function randomPing() {
@@ -430,6 +578,7 @@ function randomPing() {
   return Math.floor(
     Math.random() * (127 - 13 + 1)
   ) + 13;
+
 }
 
 function randomNodeNumber() {
@@ -437,6 +586,7 @@ function randomNodeNumber() {
   return String(
     Math.floor(Math.random() * 9) + 1
   ).padStart(2, '0');
+
 }
 
 function generateNode(city) {
@@ -451,6 +601,7 @@ function generateNode(city) {
       .toUpperCase();
 
   return `${clean}-${randomNodeNumber()}`;
+
 }
 
 function updateNode() {
@@ -462,7 +613,9 @@ function updateNode() {
 
     nodeValue.textContent =
       generateNode(city);
+
   }
+
 }
 
 function addConsoleLine() {
@@ -485,15 +638,6 @@ function addConsoleLine() {
 
   consoleWindow.prepend(line);
 
-  const lines =
-    document.querySelectorAll('.console-line');
-
-  if (lines.length > 18) {
-
-    lines[
-      lines.length - 1
-    ].remove();
-  }
 }
 
 function hideAllScreens() {
@@ -515,6 +659,7 @@ function hideAllScreens() {
   historyTab.classList.remove('active');
 
   settingsTab.classList.remove('active');
+
 }
 
 homeTab.addEventListener('click', () => {
@@ -526,6 +671,7 @@ homeTab.addEventListener('click', () => {
   );
 
   homeTab.classList.add('active');
+
 });
 
 historyTab.addEventListener('click', () => {
@@ -537,6 +683,7 @@ historyTab.addEventListener('click', () => {
   );
 
   historyTab.classList.add('active');
+
 });
 
 settingsTab.addEventListener('click', () => {
@@ -548,39 +695,6 @@ settingsTab.addEventListener('click', () => {
   );
 
   settingsTab.classList.add('active');
-});
-
-cityInput.addEventListener('input', () => {
-
-  const city =
-    cityInput.value.trim();
-
-  clearInterval(nodeInterval);
-
-  if (city.length > 0) {
-
-    const latinCity =
-      transliterate(city);
-
-    routeValue.textContent =
-      latinCity;
-
-    updateNode();
-
-    nodeInterval = setInterval(() => {
-
-      updateNode();
-
-    }, 2000);
-
-  } else {
-
-    routeValue.textContent =
-      'Moscow';
-
-    nodeValue.textContent =
-      'MSK-01';
-  }
 
 });
 
@@ -601,14 +715,6 @@ powerButton.addEventListener('click', () => {
 
     statusValue.textContent =
       'ACTIVE';
-
-    statusValue.classList.remove(
-      'disconnected'
-    );
-
-    statusValue.classList.add(
-      'online'
-    );
 
     glow.style.background =
       'radial-gradient(circle, rgba(139,92,246,0.35), transparent 70%)';
@@ -654,14 +760,6 @@ powerButton.addEventListener('click', () => {
     statusValue.textContent =
       'DISCONNECTED';
 
-    statusValue.classList.remove(
-      'online'
-    );
-
-    statusValue.classList.add(
-      'disconnected'
-    );
-
     glow.style.background =
       'radial-gradient(circle, rgba(255,196,0,0.18), transparent 70%)';
 
@@ -670,6 +768,7 @@ powerButton.addEventListener('click', () => {
     clearInterval(pingInterval);
 
     clearInterval(consoleInterval);
+
   }
 
 });
@@ -682,17 +781,11 @@ fetch(BACKEND_URL)
   .then(res => res.text())
   .then(data => {
 
-    console.log(
-      'BACKEND STATUS:',
-      data
-    );
+    console.log(data);
 
   })
   .catch(err => {
 
-    console.error(
-      'BACKEND ERROR:',
-      err
-    );
+    console.log(err);
 
   });
