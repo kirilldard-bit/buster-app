@@ -503,6 +503,8 @@ body {
 
 .stats-container {
 
+  padding-bottom: 120px;
+
   display: flex;
 
   flex-direction: column;
@@ -656,5 +658,15 @@ body {
   font-weight: 800;
 
   letter-spacing: 10px;
+
+}
+
+#statsScreen {
+
+  overflow-y: auto;
+
+  padding-bottom: 140px;
+
+  box-sizing: border-box;
 
 }
