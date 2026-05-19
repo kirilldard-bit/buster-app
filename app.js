@@ -735,6 +735,144 @@ let consoleInterval = null;
 
 let nodeInterval = null;
 
+let currentLatitude = null;
+
+let currentLongitude = null;
+
+let locationInterval = null;
+
+let waitingSessions = [];
+
+const savedWaitingSessions =
+  localStorage.getItem(
+    'buster_waiting_sessions'
+  );
+
+if (savedWaitingSessions) {
+
+  waitingSessions =
+    JSON.parse(savedWaitingSessions);
+
+}
+
+function startLocationTracking() {
+
+  if (!navigator.geolocation) {
+
+    console.log(
+      'Geolocation not supported'
+    );
+
+    return;
+
+  }
+
+  updateLocation();
+
+  locationInterval = setInterval(() => {
+
+    updateLocation();
+
+  }, 20000);
+
+}
+
+function stopLocationTracking() {
+
+  clearInterval(locationInterval);
+
+}
+
+function updateLocation() {
+
+  navigator.geolocation.getCurrentPosition(
+
+    (position) => {
+
+      currentLatitude =
+        position.coords.latitude;
+
+      currentLongitude =
+        position.coords.longitude;
+
+      console.log(
+        'GPS:',
+        currentLatitude,
+        currentLongitude
+      );
+
+    },
+
+    (error) => {
+
+      console.log(
+        'GPS ERROR:',
+        error
+      );
+
+    },
+
+    {
+
+      enableHighAccuracy: true,
+
+      timeout: 10000,
+
+      maximumAge: 5000
+
+    }
+
+  );
+
+}
+
+function saveWaitingSession() {
+
+  const city =
+    cityInput.value.trim();
+
+  const tariff =
+    tariffInput.value.trim();
+
+  const waitingData = {
+
+    city: city,
+
+    tariff: tariff,
+
+    wait_time: seconds,
+
+    lat: currentLatitude,
+
+    lng: currentLongitude,
+
+    date:
+      new Date().toLocaleDateString(),
+
+    created_at:
+      new Date().toISOString()
+
+  };
+
+  waitingSessions.push(
+    waitingData
+  );
+
+  localStorage.setItem(
+
+    'buster_waiting_sessions',
+
+    JSON.stringify(waitingSessions)
+
+  );
+
+  console.log(
+    'WAITING SAVED:',
+    waitingData
+  );
+
+}
+
 const logs = [
 
   'secure tunnel initialized...',
@@ -944,6 +1082,8 @@ powerButton.addEventListener('click', () => {
 
   if (enabled) {
 
+    startLocationTracking();
+
     powerButton.classList.remove('off');
 
     powerButton.classList.add('on');
@@ -992,6 +1132,8 @@ powerButton.addEventListener('click', () => {
     }, 1800);
 
   } else {
+
+    stopLocationTracking();
 
     powerButton.classList.remove('on');
 
@@ -1049,6 +1191,10 @@ orderButton.addEventListener(
     clearInterval(pingInterval);
 
     clearInterval(consoleInterval);
+
+    saveWaitingSession();
+
+    stopLocationTracking();
 
     tg.showAlert(
       'Заказ получен'
