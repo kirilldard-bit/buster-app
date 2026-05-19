@@ -91,6 +91,11 @@ const comfortTime =
 const comfortPlusTime =
   document.getElementById('comfortPlusTime');
 
+  const analyticsContainer =
+  document.getElementById(
+    'analyticsContainer'
+  );
+
 // ===== CITY LIBRARY =====
 
 const russianCities = [
@@ -874,6 +879,84 @@ async function detectDistrict(lat, lng) {
 
 }
 
+function renderAnalytics() {
+
+  if (!analyticsContainer) return;
+
+  analyticsContainer.innerHTML = '';
+
+  const reversedSessions =
+    [...waitingSessions].reverse();
+
+  reversedSessions.forEach(session => {
+
+    const card =
+      document.createElement('div');
+
+    card.classList.add(
+      'analytics-card'
+    );
+
+    card.innerHTML = `
+
+      <div class="analytics-title">
+        ГОРОД
+      </div>
+
+      <div class="analytics-value">
+        ${session.city || 'Неизвестно'}
+      </div>
+
+      <div class="analytics-divider"></div>
+
+      <div class="analytics-title">
+        РАЙОН
+      </div>
+
+      <div class="analytics-value">
+        ${session.district || 'Неизвестно'}
+      </div>
+
+      <div class="analytics-divider"></div>
+
+      <div class="analytics-title">
+        ТАРИФ
+      </div>
+
+      <div class="analytics-value">
+        ${session.tariff || 'Неизвестно'}
+      </div>
+
+      <div class="analytics-divider"></div>
+
+      <div class="analytics-title">
+        ВРЕМЯ ОЖИДАНИЯ
+      </div>
+
+      <div class="analytics-value">
+        ${formatTime(session.wait_time || 0)}
+      </div>
+
+      <div class="analytics-divider"></div>
+
+      <div class="analytics-title">
+        ДАТА
+      </div>
+
+      <div class="analytics-value">
+        ${session.date || 'Неизвестно'}
+      </div>
+
+    `;
+
+    analyticsContainer.appendChild(
+      card
+    );
+
+  });
+
+}
+
 function saveWaitingSession() {
 
   const city =
@@ -915,6 +998,8 @@ function saveWaitingSession() {
     JSON.stringify(waitingSessions)
 
   );
+
+  renderAnalytics();
 
   console.log(
     'WAITING SAVED:',
@@ -1261,6 +1346,14 @@ resetStatsButton.addEventListener(
 
     resetStats();
 
+    waitingSessions = [];
+
+localStorage.removeItem(
+  'buster_waiting_sessions'
+);
+
+renderAnalytics();
+
     tg.showAlert(
       'Статистика сброшена'
     );
@@ -1271,6 +1364,8 @@ resetStatsButton.addEventListener(
 // ===== START =====
 
 loadStats();
+
+renderAnalytics();
 
 checkSubscription();
 
