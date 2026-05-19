@@ -994,7 +994,7 @@ function renderAnalytics() {
 
 }
 
-function saveWaitingSession() {
+function saveWaitingSession(waitTime) {
 
   const city =
     cityInput.value.trim();
@@ -1010,7 +1010,7 @@ function saveWaitingSession() {
 
     tariff: tariff,
 
-    wait_time: seconds,
+    wait_time: waitTime,
 
     lat: currentLatitude,
 
@@ -1369,7 +1369,12 @@ orderButton.addEventListener(
 
     clearInterval(consoleInterval);
 
-    saveWaitingSession();
+    const finalWaitTime =
+    seconds;
+
+    saveWaitingSession(
+  finalWaitTime
+);
 
     stopLocationTracking();
 
