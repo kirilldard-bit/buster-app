@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
   <title>BUSTER</title>
 
   <link rel="stylesheet" href="style.css" />
@@ -116,6 +117,15 @@
 
       </div>
 
+      <!-- ORDER BUTTON -->
+
+      <button
+        class="order-btn"
+        id="orderButton"
+      >
+        ПОЛУЧИЛ ЗАКАЗ
+      </button>
+
     </div>
 
     <!-- HISTORY SCREEN -->
@@ -130,6 +140,72 @@
         class="console-window"
         id="consoleWindow"
       >
+      </div>
+
+    </div>
+
+    <!-- STATS SCREEN -->
+
+    <div class="screen" id="statsScreen">
+
+      <div class="settings-header">
+        СТАТИСТИКА
+      </div>
+
+      <div class="stats-container">
+
+        <div class="stats-item">
+
+          <div class="stats-tariff">
+            Эконом
+          </div>
+
+          <div
+            class="stats-time"
+            id="economTime"
+          >
+            00:00:00
+          </div>
+
+        </div>
+
+        <div class="stats-item">
+
+          <div class="stats-tariff">
+            Комфорт
+          </div>
+
+          <div
+            class="stats-time"
+            id="comfortTime"
+          >
+            00:00:00
+          </div>
+
+        </div>
+
+        <div class="stats-item">
+
+          <div class="stats-tariff">
+            Комфорт+
+          </div>
+
+          <div
+            class="stats-time"
+            id="comfortPlusTime"
+          >
+            00:00:00
+          </div>
+
+        </div>
+
+        <button
+          class="reset-btn"
+          id="resetStatsButton"
+        >
+          СБРОСИТЬ СТАТИСТИКУ
+        </button>
+
       </div>
 
     </div>
@@ -204,6 +280,13 @@
         id="historyTab"
       >
         История
+      </button>
+
+      <button
+        class="nav-btn"
+        id="statsTab"
+      >
+        Статистика
       </button>
 
       <button
