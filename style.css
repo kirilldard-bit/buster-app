@@ -404,3 +404,97 @@ body {
 .setting-group input::placeholder {
   color: rgba(255,255,255,0.35);
 }
+
+/* ===== NAVBAR FIX ===== */
+
+.bottom-nav {
+
+  display: flex;
+  gap: 10px;
+
+  padding: 14px;
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  justify-content: space-between;
+
+}
+
+.nav-btn {
+
+  flex: 1;
+
+  min-width: 0;
+
+  font-size: 15px;
+
+  padding: 16px 8px;
+
+  border-radius: 20px;
+
+}
+
+/* ===== ORDER BUTTON ===== */
+
+#orderButton {
+
+  margin-top: 18px;
+
+  width: 100%;
+
+  height: 58px;
+
+  border: none;
+
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #7c3aed,
+      #6d28d9
+    );
+
+  color: white;
+
+  font-size: 17px;
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  box-shadow:
+    0 0 25px rgba(124,58,237,0.45);
+
+  transition: 0.25s;
+
+}
+
+#orderButton:active {
+
+  transform: scale(0.97);
+
+}
+
+#orderButton:hover {
+
+  box-shadow:
+    0 0 35px rgba(124,58,237,0.7);
+
+}
+
+/* ===== MOBILE FIX ===== */
+
+@media (max-width: 430px) {
+
+  .nav-btn {
+
+    font-size: 13px;
+
+    padding: 15px 4px;
+
+  }
+
+}
