@@ -776,6 +776,22 @@ function startLocationTracking() {
 
   updateLocation();
 
+  setTimeout(() => {
+
+  if (
+    currentLatitude &&
+    currentLongitude
+  ) {
+
+    detectDistrict(
+      currentLatitude,
+      currentLongitude
+    );
+
+  }
+
+}, 2500);
+
   locationInterval = setInterval(() => {
 
     updateLocation();
