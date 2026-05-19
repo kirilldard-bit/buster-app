@@ -61,6 +61,16 @@ const statsScreen =
 const settingsScreen =
   document.getElementById('settingsScreen');
 
+  const ordersScreen =
+  document.getElementById(
+    'ordersScreen'
+  );
+
+const openOrdersHistory =
+  document.getElementById(
+    'openOrdersHistory'
+  );
+
 const cityInput =
   document.getElementById('cityInput');
 
@@ -1174,6 +1184,10 @@ function addConsoleLine() {
 
 function hideAllScreens() {
 
+  ordersScreen.classList.remove(
+  'active-screen'
+);
+
   homeScreen.classList.remove(
     'active-screen'
   );
@@ -1235,6 +1249,19 @@ statsTab.addEventListener('click', () => {
   statsTab.classList.add('active');
 
 });
+
+openOrdersHistory.addEventListener(
+  'click',
+  () => {
+
+    hideAllScreens();
+
+    ordersScreen.classList.add(
+      'active-screen'
+    );
+
+  }
+);
 
 settingsTab.addEventListener('click', () => {
 
