@@ -860,24 +860,45 @@ async function detectDistrict(lat, lng) {
 
     const response = await fetch(
 
-      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`
+  `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=16&addressdetails=1`,
 
-    );
+  {
+
+    headers: {
+
+      'Accept': 'application/json',
+
+      'User-Agent':
+        'BUSTER/1.0'
+
+    }
+
+  }
+
+);
 
     const data =
       await response.json();
 
-    currentDistrict =
+currentDistrict =
 
-      data.address.city_district ||
+  data.address.city_district ||
 
-      data.address.suburb ||
+  data.address.suburb ||
 
-      data.address.neighbourhood ||
+  data.address.neighbourhood ||
 
-      data.address.city ||
+  data.address.quarter ||
 
-      'Неизвестно';
+  data.address.borough ||
+
+  data.address.town ||
+
+  data.address.village ||
+
+  data.address.city ||
+
+  'Неизвестно';
 
     console.log(
       'DISTRICT:',
