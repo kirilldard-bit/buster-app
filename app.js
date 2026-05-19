@@ -739,6 +739,8 @@ let currentLatitude = null;
 
 let currentLongitude = null;
 
+let currentDistrict = 'Неизвестно';
+
 let locationInterval = null;
 
 let waitingSessions = [];
@@ -801,6 +803,11 @@ function updateLocation() {
         currentLongitude
       );
 
+      detectDistrict(
+  currentLatitude,
+  currentLongitude
+);
+
     },
 
     (error) => {
@@ -826,6 +833,47 @@ function updateLocation() {
 
 }
 
+async function detectDistrict(lat, lng) {
+
+  try {
+
+    const response = await fetch(
+
+      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`
+
+    );
+
+    const data =
+      await response.json();
+
+    currentDistrict =
+
+      data.address.city_district ||
+
+      data.address.suburb ||
+
+      data.address.neighbourhood ||
+
+      data.address.city ||
+
+      'Неизвестно';
+
+    console.log(
+      'DISTRICT:',
+      currentDistrict
+    );
+
+  } catch (err) {
+
+    console.log(
+      'DISTRICT ERROR:',
+      err
+    );
+
+  }
+
+}
+
 function saveWaitingSession() {
 
   const city =
@@ -837,6 +885,8 @@ function saveWaitingSession() {
   const waitingData = {
 
     city: city,
+
+    district: currentDistrict,
 
     tariff: tariff,
 
