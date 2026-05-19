@@ -43,6 +43,9 @@ const homeTab =
 const historyTab =
   document.getElementById('historyTab');
 
+const statsTab =
+  document.getElementById('statsTab');
+
 const settingsTab =
   document.getElementById('settingsTab');
 
@@ -51,6 +54,9 @@ const homeScreen =
 
 const historyScreen =
   document.getElementById('historyScreen');
+
+const statsScreen =
+  document.getElementById('statsScreen');
 
 const settingsScreen =
   document.getElementById('settingsScreen');
@@ -69,6 +75,21 @@ const routeValue =
 
 const nodeValue =
   document.getElementById('nodeValue');
+
+const orderButton =
+  document.getElementById('orderButton');
+
+const resetStatsButton =
+  document.getElementById('resetStatsButton');
+
+const economTime =
+  document.getElementById('economTime');
+
+const comfortTime =
+  document.getElementById('comfortTime');
+
+const comfortPlusTime =
+  document.getElementById('comfortPlusTime');
 
 // ===== CITY LIBRARY =====
 
@@ -140,135 +161,7 @@ const russianCities = [
 'Тамбов',
 'Стерлитамак',
 'Грозный',
-'Якутск',
-'Кострома',
-'Петрозаводск',
-'Нижневартовск',
-'Новороссийск',
-'Йошкар-Ола',
-'Таганрог',
-'Сыктывкар',
-'Нальчик',
-'Шахты',
-'Дзержинск',
-'Орск',
-'Благовещенск',
-'Ангарск',
-'Братск',
-'Подольск',
-'Химки',
-'Королёв',
-'Мытищи',
-'Люберцы',
-'Балашиха',
-'Домодедово',
-'Одинцово',
-'Красногорск',
-'Раменское',
-'Коломна',
-'Серпухов',
-'Пушкино',
-'Щёлково',
-'Жуковский',
-'Реутов',
-'Долгопрудный',
-'Видное',
-'Электросталь',
-'Ногинск',
-'Клин',
-'Дубна',
-'Обнинск',
-'Анапа',
-'Геленджик',
-'Туапсе',
-'Армавир',
-'Майкоп',
-'Пятигорск',
-'Кисловодск',
-'Ессентуки',
-'Минеральные Воды',
-'Невинномысск',
-'Севастополь',
-'Симферополь',
-'Ялта',
-'Евпатория',
-'Керчь',
-'Феодосия',
-'Алушта',
-'Бахчисарай',
-'Альметьевск',
-'Нижнекамск',
-'Зеленодольск',
-'Нефтекамск',
-'Салават',
-'Октябрьский',
-'Бийск',
-'Рубцовск',
-'Находка',
-'Уссурийск',
-'Комсомольск-на-Амуре',
-'Южно-Сахалинск',
-'Петропавловск-Камчатский',
-'Норильск',
-'Ачинск',
-'Абакан',
-'Кызыл',
-'Горно-Алтайск',
-'Элиста',
-'Дербент',
-'Каспийск',
-'Назрань',
-'Мурино',
-'Кудрово',
-'Всеволожск',
-'Выборг',
-'Гатчина',
-'Великий Новгород',
-'Псков',
-'Великие Луки',
-'Рыбинск',
-'Переславль-Залесский',
-'Ковров',
-'Муром',
-'Арзамас',
-'Саров',
-'Новочеркасск',
-'Батайск',
-'Каменск-Шахтинский',
-'Новошахтинск',
-'Копейск',
-'Миасс',
-'Златоуст',
-'Березники',
-'Соликамск',
-'Нефтеюганск',
-'Ханты-Мансийск',
-'Новый Уренгой',
-'Ноябрьск',
-'Салехард',
-'Тобольск',
-'Ишим',
-'Каменск-Уральский',
-'Первоуральск',
-'Нижний Тагил',
-'Серов',
-'Асбест',
-'Елец',
-'Мичуринск',
-'Новомосковск',
-'Киселёвск',
-'Прокопьевск',
-'Ленинск-Кузнецкий',
-'Междуреченск',
-'Ухта',
-'Воркута',
-'Северодвинск',
-'Кингисепп',
-'Сосновый Бор',
-'Кронштадт',
-'Зеленоград',
-'Троицк',
-'Щербинка'
+'Якутск'
 
 ];
 
@@ -279,6 +172,124 @@ const tariffs = [
   'Комфорт+'
 
 ];
+
+// ===== DAILY STATS =====
+
+let dailyStats = {
+
+  economy: 0,
+  comfort: 0,
+  comfortPlus: 0,
+  date: new Date().toLocaleDateString()
+
+};
+
+function loadStats() {
+
+  const saved =
+    localStorage.getItem('buster_stats');
+
+  if (saved) {
+
+    dailyStats =
+      JSON.parse(saved);
+
+  }
+
+  const today =
+    new Date().toLocaleDateString();
+
+  if (dailyStats.date !== today) {
+
+    resetStats();
+
+  }
+
+  updateStatsUI();
+
+}
+
+function saveStats() {
+
+  localStorage.setItem(
+    'buster_stats',
+    JSON.stringify(dailyStats)
+  );
+
+}
+
+function resetStats() {
+
+  dailyStats = {
+
+    economy: 0,
+    comfort: 0,
+    comfortPlus: 0,
+    date: new Date().toLocaleDateString()
+
+  };
+
+  saveStats();
+
+  updateStatsUI();
+
+}
+
+function updateStatsUI() {
+
+  if (economTime) {
+
+    economTime.textContent =
+      formatTime(dailyStats.economy);
+
+  }
+
+  if (comfortTime) {
+
+    comfortTime.textContent =
+      formatTime(dailyStats.comfort);
+
+  }
+
+  if (comfortPlusTime) {
+
+    comfortPlusTime.textContent =
+      formatTime(dailyStats.comfortPlus);
+
+  }
+
+}
+
+function addSecondToTariff() {
+
+  const tariff =
+    tariffInput.value.trim();
+
+  if (tariff === 'Эконом') {
+
+    dailyStats.economy++;
+
+  }
+
+  if (tariff === 'Комфорт') {
+
+    dailyStats.comfort++;
+
+  }
+
+  if (tariff === 'Комфорт+') {
+
+    dailyStats.comfortPlus++;
+
+  }
+
+  saveStats();
+
+  updateStatsUI();
+
+}
+
+// ===== DROPDOWN =====
 
 function setupDropdown(input, items) {
 
@@ -616,8 +627,6 @@ setTimeout(() => {
 
   if (settingsScreen) {
 
-    // USER ID BLOCK
-
     const userIdBlock =
       document.createElement('div');
 
@@ -663,8 +672,6 @@ setTimeout(() => {
     settingsScreen.appendChild(
       userIdBlock
     );
-
-    // SAVE BUTTON
 
     const saveButton =
       document.createElement('button');
@@ -865,6 +872,10 @@ function hideAllScreens() {
     'active-screen'
   );
 
+  statsScreen.classList.remove(
+    'active-screen'
+  );
+
   settingsScreen.classList.remove(
     'active-screen'
   );
@@ -872,6 +883,8 @@ function hideAllScreens() {
   homeTab.classList.remove('active');
 
   historyTab.classList.remove('active');
+
+  statsTab.classList.remove('active');
 
   settingsTab.classList.remove('active');
 
@@ -898,6 +911,18 @@ historyTab.addEventListener('click', () => {
   );
 
   historyTab.classList.add('active');
+
+});
+
+statsTab.addEventListener('click', () => {
+
+  hideAllScreens();
+
+  statsScreen.classList.add(
+    'active-screen'
+  );
+
+  statsTab.classList.add('active');
 
 });
 
@@ -931,8 +956,6 @@ powerButton.addEventListener('click', () => {
     statusValue.textContent =
       'ACTIVE';
 
-    // FIX ACTIVE COLOR
-
     statusValue.style.color =
       '#8b5cf6';
 
@@ -942,6 +965,8 @@ powerButton.addEventListener('click', () => {
     interval = setInterval(() => {
 
       seconds++;
+
+      addSecondToTariff();
 
       timer.textContent =
         formatTime(seconds);
@@ -980,8 +1005,6 @@ powerButton.addEventListener('click', () => {
     statusValue.textContent =
       'DISCONNECTED';
 
-    // RESET COLOR
-
     statusValue.style.color =
       'white';
 
@@ -998,7 +1021,60 @@ powerButton.addEventListener('click', () => {
 
 });
 
+// ===== ORDER BUTTON =====
+
+orderButton.addEventListener(
+  'click',
+  () => {
+
+    enabled = false;
+
+    powerButton.classList.remove('on');
+
+    powerButton.classList.add('off');
+
+    buttonIcon.textContent = '⏻';
+
+    statusText.textContent =
+      'DISCONNECTED';
+
+    statusValue.textContent =
+      'DISCONNECTED';
+
+    statusValue.style.color =
+      'white';
+
+    clearInterval(interval);
+
+    clearInterval(pingInterval);
+
+    clearInterval(consoleInterval);
+
+    tg.showAlert(
+      'Заказ получен'
+    );
+
+  }
+);
+
+// ===== RESET BUTTON =====
+
+resetStatsButton.addEventListener(
+  'click',
+  () => {
+
+    resetStats();
+
+    tg.showAlert(
+      'Статистика сброшена'
+    );
+
+  }
+);
+
 // ===== START =====
+
+loadStats();
 
 checkSubscription();
 
