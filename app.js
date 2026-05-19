@@ -1360,11 +1360,6 @@ orderButton.addEventListener(
 
     clearInterval(interval);
 
-    seconds = 0;
-
-   timer.textContent =
-  '00:00:00';
-
     clearInterval(pingInterval);
 
     clearInterval(consoleInterval);
@@ -1375,6 +1370,11 @@ orderButton.addEventListener(
     saveWaitingSession(
   finalWaitTime
 );
+
+seconds = 0;
+
+timer.textContent =
+  '00:00:00';
 
     stopLocationTracking();
 
