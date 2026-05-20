@@ -694,32 +694,44 @@ setTimeout(() => {
     saveButton.innerText =
       'СОХРАНИТЬ ДАННЫЕ';
 
-    saveButton.style.marginTop =
-      '20px';
+   saveButton.style.marginTop =
+  '24px';
 
-    saveButton.style.width =
-      '100%';
+saveButton.style.width =
+  '100%';
 
-    saveButton.style.height =
-      '72px';
+saveButton.style.minHeight =
+  '72px';
 
-    saveButton.style.border =
-      'none';
+saveButton.style.padding =
+  '0 24px';
 
-    saveButton.style.borderRadius =
-      '28px';
+saveButton.style.border =
+  'none';
 
-    saveButton.style.background =
-      '#6c3cff';
+saveButton.style.borderRadius =
+  '28px';
 
-    saveButton.style.color =
-      'white';
+saveButton.style.background =
+  'linear-gradient(135deg,#7c3aed,#6d28d9)';
 
-    saveButton.style.fontSize =
-      '16px';
+saveButton.style.color =
+  'white';
 
-    saveButton.style.fontWeight =
-      '700';
+saveButton.style.fontSize =
+  '18px';
+
+saveButton.style.fontWeight =
+  '800';
+
+saveButton.style.letterSpacing =
+  '1px';
+
+saveButton.style.boxShadow =
+  '0 0 35px rgba(124,58,237,0.55)';
+
+saveButton.style.flexShrink =
+  '0';
 
     saveButton.onclick =
       async () => {
