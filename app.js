@@ -963,7 +963,6 @@ function renderAnalytics() {
     [...waitingSessions].reverse();
 
   reversedSessions.forEach(session => {
-    console.log(session);
 
     const card =
       document.createElement('div');
@@ -1537,6 +1536,7 @@ function renderDistrictAnalytics() {
   const grouped = {};
 
   sessions.forEach(session => {
+    console.log(session);
 
     const district =
       session.district || 'Неизвестно';
