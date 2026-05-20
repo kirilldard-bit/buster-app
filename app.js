@@ -49,6 +49,31 @@ const statsTab =
 const settingsTab =
   document.getElementById('settingsTab');
 
+  const aiScreen =
+  document.getElementById(
+    'aiScreen'
+  );
+
+const aiChat =
+  document.getElementById(
+    'aiChat'
+  );
+
+const aiInput =
+  document.getElementById(
+    'aiInput'
+  );
+
+const sendAiMessage =
+  document.getElementById(
+    'sendAiMessage'
+  );
+
+const aiFloatingButton =
+  document.getElementById(
+    'aiFloatingButton'
+  );
+
 const homeScreen =
   document.getElementById('homeScreen');
 
@@ -1211,6 +1236,10 @@ function addConsoleLine() {
 
 function hideAllScreens() {
 
+  aiScreen.classList.remove(
+  'active-screen'
+);
+
   analyticsScreen.classList.remove(
   'active-screen'
 );
@@ -1669,3 +1698,58 @@ function renderDistrictAnalytics() {
   );
 
 }
+
+function addAiMessage(text) {
+
+  const message =
+    document.createElement('div');
+
+  message.className =
+    'ai-message';
+
+  message.innerHTML = `
+
+    <div class="ai-badge">
+      AI
+    </div>
+
+    <div class="ai-text">
+      ${text}
+    </div>
+
+  `;
+
+  aiChat.appendChild(message);
+
+}
+
+sendAiMessage.addEventListener(
+  'click',
+  () => {
+
+    const text =
+      aiInput.value.trim();
+
+    if (!text) return;
+
+    addAiMessage(
+      'Анализирую спрос и активность районов...'
+    );
+
+    aiInput.value = '';
+
+  }
+);
+
+aiFloatingButton.addEventListener(
+  'click',
+  () => {
+
+    hideAllScreens();
+
+    aiScreen.classList.add(
+      'active-screen'
+    );
+
+  }
+);

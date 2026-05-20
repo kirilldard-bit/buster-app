@@ -142,11 +142,18 @@
       <!-- ORDER BUTTON -->
 
       <button
-        class="order-btn"
-        id="orderButton"
-      >
-        ПОЛУЧИЛ ЗАКАЗ
-      </button>
+  class="order-btn"
+  id="orderButton"
+>
+  ПОЛУЧИЛ ЗАКАЗ
+</button>
+
+<button
+  id="aiFloatingButton"
+  class="ai-floating-btn"
+>
+  AI
+       </button>
 
     </div>
 
@@ -296,6 +303,56 @@
     id="districtAnalytics"
     class="analytics-container"
   >
+  </div>
+
+</div>
+
+<!-- AI SCREEN -->
+
+<div
+  class="screen"
+  id="aiScreen"
+>
+
+  <div class="history-header">
+    AI ASSISTANT
+  </div>
+
+  <div
+    class="ai-chat"
+    id="aiChat"
+  >
+
+    <div class="ai-message">
+
+      <div class="ai-badge">
+        AI
+      </div>
+
+      <div class="ai-text">
+
+        Привет.
+        Я анализирую районы,
+        спрос и активность.
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="ai-input-wrapper">
+
+    <input
+      type="text"
+      id="aiInput"
+      placeholder="Спросить AI..."
+    />
+
+    <button id="sendAiMessage">
+      →
+    </button>
+
   </div>
 
 </div>
