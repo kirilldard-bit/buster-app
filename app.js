@@ -1502,11 +1502,11 @@ fetch(BACKEND_URL)
 
   });
 
-  function getDistrictLevel(avg) {
+function getDistrictLevel(avg) {
 
-  if (avg >= 60 && avg < 180) {
+  if (avg >= 0 && avg < 180) {
 
-    return '🟢 ВЫСОКИЙ СПРОС';
+    return '⚡ ОЧЕНЬ ВЫСОКИЙ СПРОС';
 
   }
 
@@ -1516,19 +1516,37 @@ fetch(BACKEND_URL)
 
   }
 
-  if (avg >= 360 && avg <= 720) {
+  if (avg >= 360 && avg < 720) {
 
-    return '🔴 НИЗКИЙ СПРОС';
-
-  }
-
-  if (avg < 60) {
-
-    return '⚡ ОЧЕНЬ ВЫСОКИЙ СПРОС';
+    return '🟠 НИЗКИЙ СПРОС';
 
   }
 
-  return '⛔ ОЧЕНЬ НИЗКИЙ СПРОС';
+  return '🔴 ОЧЕНЬ НИЗКИЙ СПРОС';
+
+}
+
+function getDistrictWaitType(avg) {
+
+  if (avg >= 0 && avg < 180) {
+
+    return 'НИЗКИЙ ПРОСТОЙ';
+
+  }
+
+  if (avg >= 180 && avg < 360) {
+
+    return 'СРЕДНИЙ ПРОСТОЙ';
+
+  }
+
+  if (avg >= 360 && avg < 720) {
+
+    return 'ДОЛГИЙ ПРОСТОЙ';
+
+  }
+
+  return 'КРИТИЧЕСКИЙ ПРОСТОЙ';
 
 }
 
@@ -1624,7 +1642,7 @@ function renderDistrictAnalytics() {
         </div>
 
         <div class="analytics-title">
-          СРЕДНИЙ ПРОСТОЙ
+          ${getDistrictWaitType(avg)}
         </div>
 
         <div class="analytics-value">
