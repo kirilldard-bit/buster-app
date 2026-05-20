@@ -799,10 +799,24 @@ body {
   transform: scale(0.97);
 }
 
-#settingsScreen {
-
-  justify-content: flex-start;
+#statsScreen {
 
   overflow-y: auto;
+
+  padding-bottom: 220px;
+
+}
+
+#ordersScreen {
+
+  overflow-y: auto;
+
+  padding-bottom: 220px;
+
+}
+
+#settingsScreen {
+
+  overflow: hidden;
 
 }
