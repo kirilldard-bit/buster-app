@@ -1067,7 +1067,7 @@ function saveWaitingSession(waitTime) {
 
   localStorage.setItem(
 
-    'buster_sessions'
+    'buster_sessions',
 
     JSON.stringify(waitingSessions)
 
