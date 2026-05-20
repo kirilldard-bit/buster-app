@@ -701,13 +701,13 @@ setTimeout(() => {
       '100%';
 
     saveButton.style.height =
-      '68px';
+      '72px';
 
     saveButton.style.border =
       'none';
 
     saveButton.style.borderRadius =
-      '26px';
+      '28px';
 
     saveButton.style.background =
       '#6c3cff';
