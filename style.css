@@ -837,3 +837,11 @@ body {
   padding-bottom: 240px;
 
 }
+
+#statsScreen {
+
+  transform: scale(0.92);
+
+  transform-origin: top center;
+
+}
