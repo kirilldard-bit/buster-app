@@ -695,7 +695,7 @@ setTimeout(() => {
       'СОХРАНИТЬ ДАННЫЕ';
 
    saveButton.style.marginTop =
-  '24px';
+  '14px';
 
 saveButton.style.width =
   '100%';
