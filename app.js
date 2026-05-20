@@ -1504,19 +1504,31 @@ fetch(BACKEND_URL)
 
   function getDistrictLevel(avg) {
 
-  if (avg <= 180) {
+  if (avg >= 60 && avg < 180) {
 
     return '🟢 НИЗКИЙ ПРОСТОЙ';
 
   }
 
-  if (avg <= 420) {
+  if (avg >= 180 && avg < 360) {
 
     return '🟡 СРЕДНИЙ ПРОСТОЙ';
 
   }
 
-  return '🔴 ВЫСОКИЙ ПРОСТОЙ';
+  if (avg >= 360 && avg <= 720) {
+
+    return '🔴 ДОЛГИЙ ПРОСТОЙ';
+
+  }
+
+  if (avg < 60) {
+
+    return '⚡ ОЧЕНЬ ВЫСОКИЙ СПРОС';
+
+  }
+
+  return '⛔ КРИТИЧЕСКИЙ ПРОСТОЙ';
 
 }
 
