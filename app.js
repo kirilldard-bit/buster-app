@@ -963,6 +963,7 @@ function renderAnalytics() {
     [...waitingSessions].reverse();
 
   reversedSessions.forEach(session => {
+    console.log(session);
 
     const card =
       document.createElement('div');
@@ -1547,8 +1548,10 @@ function renderDistrictAnalytics() {
     }
 
     grouped[district].push(
-      session.wait_time
-    );
+  session.waitTime ||
+  session.wait_time ||
+  0
+);
 
   });
 
