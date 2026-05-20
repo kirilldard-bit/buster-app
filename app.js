@@ -66,6 +66,21 @@ const settingsScreen =
     'ordersScreen'
   );
 
+  const analyticsScreen =
+  document.getElementById(
+    'analyticsScreen'
+  );
+
+const openAnalytics =
+  document.getElementById(
+    'openAnalytics'
+  );
+
+const districtAnalytics =
+  document.getElementById(
+    'districtAnalytics'
+  );
+
 const openOrdersHistory =
   document.getElementById(
     'openOrdersHistory'
@@ -1196,6 +1211,10 @@ function addConsoleLine() {
 
 function hideAllScreens() {
 
+  analyticsScreen.classList.remove(
+  'active-screen'
+);
+
   ordersScreen.classList.remove(
   'active-screen'
 );
@@ -1271,6 +1290,21 @@ openOrdersHistory.addEventListener(
     ordersScreen.classList.add(
       'active-screen'
     );
+
+  }
+);
+
+openAnalytics.addEventListener(
+  'click',
+  () => {
+
+    hideAllScreens();
+
+    analyticsScreen.classList.add(
+      'active-screen'
+    );
+
+    renderDistrictAnalytics();
 
   }
 );
@@ -1467,3 +1501,138 @@ fetch(BACKEND_URL)
     console.log(err);
 
   });
+
+  function getDistrictLevel(avg) {
+
+  if (avg <= 180) {
+
+    return '🟢 НИЗКИЙ ПРОСТОЙ';
+
+  }
+
+  if (avg <= 420) {
+
+    return '🟡 СРЕДНИЙ ПРОСТОЙ';
+
+  }
+
+  return '🔴 ВЫСОКИЙ ПРОСТОЙ';
+
+}
+
+function renderDistrictAnalytics() {
+
+  if (!districtAnalytics) return;
+
+  districtAnalytics.innerHTML = '';
+
+  const sessions =
+    JSON.parse(
+      localStorage.getItem(
+        'buster_sessions'
+      ) || '[]'
+    );
+
+  const grouped = {};
+
+  sessions.forEach(session => {
+
+    const district =
+      session.district || 'Неизвестно';
+
+    if (!grouped[district]) {
+
+      grouped[district] = [];
+
+    }
+
+    grouped[district].push(
+      session.wait_time
+    );
+
+  });
+
+  Object.keys(grouped).forEach(
+    district => {
+
+      const waits =
+        grouped[district];
+
+      const avg =
+        waits.reduce(
+          (a, b) => a + b,
+          0
+        ) / waits.length;
+
+      const percent =
+        Math.min(
+          avg / 10,
+          100
+        );
+
+      const card =
+        document.createElement('div');
+
+      card.className =
+        'analytics-card';
+
+      card.innerHTML = `
+
+        <div class="analytics-title">
+          РАЙОН
+        </div>
+
+        <div class="analytics-value">
+          ${district}
+        </div>
+
+        <div style="
+          width:100%;
+          height:14px;
+          border-radius:999px;
+          overflow:hidden;
+          background:rgba(255,255,255,0.05);
+          margin-bottom:18px;
+        ">
+
+          <div style="
+            width:${percent}%;
+            height:100%;
+            background:linear-gradient(
+              90deg,
+              #7c3aed,
+              #a855f7
+            );
+          ">
+          </div>
+
+        </div>
+
+        <div class="analytics-title">
+          СРЕДНИЙ ПРОСТОЙ
+        </div>
+
+        <div class="analytics-value">
+          ${formatTime(
+            Math.floor(avg)
+          )}
+        </div>
+
+        <div class="analytics-title">
+          УРОВЕНЬ
+        </div>
+
+        <div class="analytics-value">
+          ${getDistrictLevel(avg)}
+        </div>
+
+      `;
+
+      districtAnalytics.appendChild(
+        card
+      );
+
+    }
+  );
+
+}
