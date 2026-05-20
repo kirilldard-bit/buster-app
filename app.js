@@ -701,7 +701,7 @@ saveButton.style.width =
   '100%';
 
 saveButton.style.minHeight =
-  '72px';
+  '64px';
 
 saveButton.style.padding =
   '0 24px';
@@ -710,7 +710,7 @@ saveButton.style.border =
   'none';
 
 saveButton.style.borderRadius =
-  '28px';
+  '22px';
 
 saveButton.style.background =
   'linear-gradient(135deg,#7c3aed,#6d28d9)';
