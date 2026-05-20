@@ -6,7 +6,8 @@
 
 body {
   height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   font-family: Arial, sans-serif;
   color: white;
@@ -818,5 +819,21 @@ body {
 #settingsScreen {
 
   overflow: hidden;
+
+}
+
+#statsScreen {
+
+  overflow-y: auto;
+
+  padding-bottom: 240px;
+
+}
+
+#ordersScreen {
+
+  overflow-y: auto;
+
+  padding-bottom: 240px;
 
 }
