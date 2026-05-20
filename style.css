@@ -37,17 +37,31 @@ body {
 }
 
 .app-container {
+
   position: relative;
+
   z-index: 2;
+
+  width: 100%;
+
+  max-width: 430px;
+
+  margin: 0 auto;
 
   height: 100vh;
 
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
+
   justify-content: space-between;
 
-  padding: 28px 20px 32px;
+  padding: 28px 20px 110px;
+
+  box-sizing: border-box;
+
 }
 
 .top-panel {
@@ -245,6 +259,7 @@ body {
   display: none;
 
   width: 100%;
+  max-width: 430px;
 
   flex-direction: column;
   align-items: center;
