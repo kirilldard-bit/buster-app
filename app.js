@@ -1725,18 +1725,72 @@ function addAiMessage(text) {
 
 sendAiMessage.addEventListener(
   'click',
-  () => {
+  async () => {
 
     const text =
       aiInput.value.trim();
 
     if (!text) return;
 
-    addAiMessage(
-      'Анализирую спрос и активность районов...'
+    const userMessage =
+      document.createElement('div');
+
+    userMessage.className =
+      'ai-message';
+
+    userMessage.innerHTML = `
+
+      <div class="ai-badge">
+        YOU
+      </div>
+
+      <div class="ai-text">
+        ${text}
+      </div>
+
+    `;
+
+    aiChat.appendChild(
+      userMessage
     );
 
     aiInput.value = '';
+
+    try {
+
+      const response =
+        await fetch(
+          'bus-backend-production-1f45.up.railway.app',
+          {
+
+            method: 'POST',
+
+            headers: {
+              'Content-Type':
+                'application/json'
+            },
+
+            body: JSON.stringify({
+              message: text
+            })
+
+          }
+        );
+
+      const data =
+        await response.json();
+
+      addAiMessage(
+        data.reply
+      );
+
+    } catch (err) {
+
+      addAiMessage(
+        'Ошибка AI соединения'
+      );
+
+    }
 
   }
 );
