@@ -1760,7 +1760,7 @@ sendAiMessage.addEventListener(
 
       const response =
         await fetch(
-          'bus-backend-production-1f45.up.railway.app',
+          'bus-backend-production-1f45.up.railway.app/ai-chat',
           {
 
             method: 'POST',
