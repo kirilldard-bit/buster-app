@@ -1727,6 +1727,8 @@ sendAiMessage.addEventListener(
   'click',
   async () => {
 
+    console.log('AI CLICK WORKS');
+
     const text =
       aiInput.value.trim();
 
