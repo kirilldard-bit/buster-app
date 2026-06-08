@@ -675,11 +675,13 @@ function setupDropdown(input, items) {
   routeValue.textContent =
     getRouteName(item);
 
+    const randomNumber =
+  Math.floor(Math.random() * 9) + 1;
+
   nodeValue.textContent =
-    getNodeCode(item);
+    `${getNodeCode(item)}-${randomNumber}`;
 
-
-          }
+}
 
         }
       );
@@ -1570,8 +1572,11 @@ function updateNode() {
 
   if (city.length > 0) {
 
+    const randomNumber =
+      Math.floor(Math.random() * 9) + 1;
+
     nodeValue.textContent =
-      getNodeCode(city);
+      `${getNodeCode(city)}-${randomNumber}`;
 
   }
 }
