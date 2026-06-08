@@ -602,6 +602,24 @@ opacity:0.9;
       </div>
 
       <button
+  onclick="activateTrial()"
+  style="
+    margin-top:25px;
+    width:100%;
+    max-width:360px;
+    height:60px;
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:18px;
+    background:rgba(255,255,255,0.05);
+    color:white;
+    font-size:18px;
+    font-weight:600;
+  "
+>
+Попробовать бесплатно 1 час
+</button>
+
+      <button
         onclick="openPayment()"
         style="
           margin-top:25px;
@@ -652,6 +670,51 @@ onclick="Telegram.WebApp.openLink('https://buster-app-three.vercel.app/contacts.
     </div>
 
   `;
+
+}
+
+async function activateTrial() {
+
+  try {
+
+    const response = await fetch(
+      `${BACKEND_URL}/activate-trial`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          telegram_id: telegramUserId
+        })
+      }
+    );
+
+    const result = await response.json();
+
+    if (!result.success) {
+      alert(
+        result.error ||
+        'Пробный период уже использован'
+      );
+      return;
+    }
+
+    alert(
+      'Пробный доступ активирован на 1 час'
+    );
+
+    location.reload();
+
+  } catch (err) {
+
+    console.error(err);
+
+    alert(
+      'Ошибка активации пробного доступа'
+    );
+
+  }
 
 }
 
