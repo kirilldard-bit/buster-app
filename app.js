@@ -606,11 +606,23 @@ onclick="Telegram.WebApp.openLink('https://buster-app-three.vercel.app/privacy.h
 Политика
 </a>
   <span>•</span>
-  <a href="oferta.html">Оферта</a>
+<a
+onclick="Telegram.WebApp.openLink('https://buster-app-three.vercel.app/oferta.html')"
+>
+Оферта
+</a>
   <span>•</span>
-  <a href="refund.html">Возврат</a>
+  <a
+onclick="Telegram.WebApp.openLink('https://buster-app-three.vercel.app/refund.html')"
+>
+Возврат
+</a>
   <span>•</span>
-  <a href="contacts.html">Контакты</a>
+  <a
+onclick="Telegram.WebApp.openLink('https://buster-app-three.vercel.app/contacts.html')"
+>
+Контакты
+</a>
 </div>
 
 <div class="payment-agreement">
