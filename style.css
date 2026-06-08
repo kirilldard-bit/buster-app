@@ -1030,3 +1030,28 @@ body {
   font-weight: 700;
 
 }
+
+.payment-links {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.payment-links a {
+  color: #999;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.payment-links a:hover {
+  color: #fff;
+}
+
+.payment-agreement {
+  margin-top: 15px;
+  padding: 0 20px;
+  text-align: center;
+  font-size: 11px;
+  color: #777;
+  line-height: 1.5;
+}

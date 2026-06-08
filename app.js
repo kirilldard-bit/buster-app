@@ -584,15 +584,15 @@ function showSubscriptionScreen() {
       <button
         onclick="openPayment()"
         style="
-          margin-top:40px;
+          margin-top:25px;
           width:100%;
-          max-width:320px;
-          height:62px;
+          max-width:360px;
+          height:72px;
           border:none;
           border-radius:18px;
           background:#6c3cff;
           color:white;
-          font-size:19px;
+          font-size:22px;
           font-weight:700;
         "
       >
