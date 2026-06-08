@@ -398,6 +398,81 @@ const russianCities = [
 'Лабытнанги'
 ];
 
+const majorCityNames = {
+  'Москва': 'Moscow',
+  'Санкт-Петербург': 'Saint Petersburg',
+  'Нижний Новгород': 'Nizhny Novgorod',
+  'Ростов-на-Дону': 'Rostov-on-Don',
+  'Новосибирск': 'Novosibirsk',
+  'Екатеринбург': 'Yekaterinburg',
+  'Краснодар': 'Krasnodar',
+  'Казань': 'Kazan',
+  'Самара': 'Samara',
+  'Уфа': 'Ufa',
+  'Челябинск': 'Chelyabinsk',
+  'Пермь': 'Perm',
+  'Воронеж': 'Voronezh',
+  'Красноярск': 'Krasnoyarsk',
+  'Тюмень': 'Tyumen',
+  'Сочи': 'Sochi'
+};
+
+const majorCityCodes = {
+  'Москва': 'MSK',
+  'Санкт-Петербург': 'SPB',
+  'Новосибирск': 'OVB',
+  'Екатеринбург': 'SVX',
+  'Казань': 'KZN',
+  'Краснодар': 'KRD',
+  'Сочи': 'AER',
+  'Самара': 'KUF',
+  'Уфа': 'UFA',
+  'Ростов-на-Дону': 'ROV',
+  'Челябинск': 'CEK',
+  'Красноярск': 'KJA',
+  'Тюмень': 'TJM'
+};
+
+function transliterateCity(text) {
+  const map = {
+    'А':'A','Б':'B','В':'V','Г':'G','Д':'D',
+    'Е':'E','Ё':'E','Ж':'Zh','З':'Z','И':'I',
+    'Й':'Y','К':'K','Л':'L','М':'M','Н':'N',
+    'О':'O','П':'P','Р':'R','С':'S','Т':'T',
+    'У':'U','Ф':'F','Х':'Kh','Ц':'Ts','Ч':'Ch',
+    'Ш':'Sh','Щ':'Sch','Ъ':'','Ы':'Y','Ь':'',
+    'Э':'E','Ю':'Yu','Я':'Ya',
+    'а':'a','б':'b','в':'v','г':'g','д':'d',
+    'е':'e','ё':'e','ж':'zh','з':'z','и':'i',
+    'й':'y','к':'k','л':'l','м':'m','н':'n',
+    'о':'o','п':'p','р':'r','с':'s','т':'t',
+    'у':'u','ф':'f','х':'kh','ц':'ts','ч':'ch',
+    'ш':'sh','щ':'sch','ъ':'','ы':'y','ь':'',
+    'э':'e','ю':'yu','я':'ya'
+  };
+
+  return text
+    .split('')
+    .map(char => map[char] || char)
+    .join('');
+}
+
+function getRouteName(city) {
+  return majorCityNames[city] || transliterateCity(city);
+}
+
+function getNodeCode(city) {
+  if (majorCityCodes[city]) {
+    return majorCityCodes[city];
+  }
+
+  const latin = transliterateCity(city)
+    .replace(/[^a-zA-Z]/g, '')
+    .toUpperCase();
+
+  return latin.substring(0, 3);
+}
+
 const tariffs = [
 
   'Эконом',
@@ -597,13 +672,12 @@ function setupDropdown(input, items) {
 
           if (input === cityInput) {
 
-            const latinCity =
-              transliterate(item);
+  routeValue.textContent =
+    getRouteName(item);
 
-            routeValue.textContent =
-              latinCity;
+  nodeValue.textContent =
+    getNodeCode(item);
 
-            updateNode();
 
           }
 
@@ -1497,10 +1571,9 @@ function updateNode() {
   if (city.length > 0) {
 
     nodeValue.textContent =
-      generateNode(city);
+      getNodeCode(city);
 
   }
-
 }
 
 function addConsoleLine() {
