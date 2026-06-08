@@ -3,6 +3,10 @@ const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
 
+if (tg.disableVerticalSwipes) {
+    tg.disableVerticalSwipes();
+}
+
 const telegramUser = tg.initDataUnsafe?.user;
 
 const telegramUserId =
