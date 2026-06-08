@@ -599,6 +599,20 @@ function showSubscriptionScreen() {
         ОПЛАТИТЬ
       </button>
 
+      <div class="payment-links">
+  <a href="privacy.html">Политика</a>
+  <span>•</span>
+  <a href="oferta.html">Оферта</a>
+  <span>•</span>
+  <a href="refund.html">Возврат</a>
+  <span>•</span>
+  <a href="contacts.html">Контакты</a>
+</div>
+
+<div class="payment-agreement">
+  Нажимая кнопку «Оплатить», вы принимаете условия оферты и политики конфиденциальности.
+</div>
+
     </div>
 
   `;
