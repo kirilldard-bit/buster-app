@@ -567,6 +567,24 @@ function showSubscriptionScreen() {
       </div>
 
       <div style="
+margin-top:25px;
+text-align:left;
+max-width:320px;
+font-size:15px;
+line-height:1.8;
+opacity:0.9;
+">
+
+<div>✓ AI-помощник для водителей</div>
+<div>✓ Анализ погоды</div>
+<div>✓ Анализ дорожной ситуации</div>
+<div>✓ Статистика активности</div>
+<div>✓ История использования</div>
+<div>✓ Все будущие обновления</div>
+
+</div>
+
+      <div style="
         margin-top:35px;
         font-size:44px;
         font-weight:800;
