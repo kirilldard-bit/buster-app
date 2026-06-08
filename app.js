@@ -540,14 +540,16 @@ function showSubscriptionScreen() {
     ">
 
       <img
-        src="./assets/map.png"
-        style="
-          width:220px;
-          border-radius:24px;
-          margin-bottom:30px;
-          box-shadow:0 0 40px rgba(108,60,255,0.45);
-        "
-      />
+src="./assets/map.png"
+style="
+width:260px;
+height:auto;
+border-radius:24px;
+margin-bottom:30px;
+box-shadow:0 0 40px rgba(108,60,255,0.45);
+object-fit:contain;
+"
+/>
 
       <div style="
         font-size:34px;
