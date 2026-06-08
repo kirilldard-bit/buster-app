@@ -115,7 +115,7 @@ const cityInput =
   document.getElementById('cityInput');
 
 const tariffInput =
-  document.querySelectorAll('input')[1];
+  document.getElementById('tariffInput');
 
 const ratingInput =
   document.querySelectorAll('input')[2];
