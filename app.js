@@ -600,7 +600,11 @@ function showSubscriptionScreen() {
       </button>
 
       <div class="payment-links">
-  <a href="privacy.html">Политика</a>
+  <a
+onclick="Telegram.WebApp.openLink('https://buster-app-three.vercel.app/privacy.html')"
+>
+Политика
+</a>
   <span>•</span>
   <a href="oferta.html">Оферта</a>
   <span>•</span>
