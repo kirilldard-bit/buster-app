@@ -527,7 +527,16 @@ function showSubscriptionScreen() {
     <div style="
       width:100%;
       min-height:100vh;
-      background:black;
+      background:
+linear-gradient(
+rgba(0,0,0,0.88),
+rgba(0,0,0,0.88)
+),
+url('./assets/map.png');
+
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
       display:flex;
       flex-direction:column;
       justify-content:center;
