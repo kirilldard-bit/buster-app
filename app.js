@@ -3,6 +3,10 @@ const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
 
+setTimeout(() => {
+  startLocationTracking();
+}, 1000);
+
 if (tg.disableVerticalSwipes) {
     tg.disableVerticalSwipes();
 }
@@ -1197,6 +1201,10 @@ if (savedWaitingSessions) {
 
 function startLocationTracking() {
 
+  if (locationInterval) {
+  return;
+}
+
   if (!navigator.geolocation) {
 
     console.log(
@@ -2148,8 +2156,10 @@ sendAiMessage.addEventListener(
             },
 
             body: JSON.stringify({
-              message: text
-            })
+  message: text,
+  district: currentDistrict,
+  city: cityInput.value
+})
 
           }
         );
