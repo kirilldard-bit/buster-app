@@ -2190,7 +2190,9 @@ sendAiMessage.addEventListener(
             body: JSON.stringify({
   message: text,
   district: currentDistrict,
-  city: cityInput.value
+  city: cityInput.value,
+  latitude: currentLatitude,
+  longitude: currentLongitude
 })
 
           }
