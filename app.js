@@ -680,16 +680,9 @@ function setupDropdown(input, items) {
 
           if (input === cityInput) {
 
-  routeValue.textContent =
-    getRouteName(item);
+            updateRouteAndNode(item);
 
-    const randomNumber =
-  Math.floor(Math.random() * 9) + 1;
-
-  nodeValue.textContent =
-    `${getNodeCode(item)}-${randomNumber}`;
-
-}
+          }
 
         }
       );
@@ -720,6 +713,63 @@ function setupDropdown(input, items) {
 
   }
 
+  renderItems();
+
+  input.addEventListener(
+    'input',
+    () => {
+
+      renderItems(input.value);
+
+      dropdown.style.display =
+        'block';
+
+    }
+  );
+
+  input.addEventListener(
+    'focus',
+    () => {
+
+      renderItems(input.value);
+
+      dropdown.style.display =
+        'block';
+
+    }
+  );
+
+  document.addEventListener(
+    'click',
+    (e) => {
+
+      if (!wrapper.contains(e.target)) {
+
+        dropdown.style.display =
+          'none';
+
+      }
+
+    }
+  );
+
+}
+
+// ===== ROUTE & NODE =====
+
+function updateRouteAndNode(city) {
+
+  routeValue.textContent =
+    getRouteName(city);
+
+  const randomNumber =
+    Math.floor(Math.random() * 9) + 1;
+
+  nodeValue.textContent =
+    `${getNodeCode(city)}-${randomNumber}`;
+
+}
+
   input.addEventListener('focus', () => {
 
     renderItems(input.value);
@@ -748,8 +798,6 @@ function setupDropdown(input, items) {
 
     }
   );
-
-}
 
 setupDropdown(cityInput, russianCities);
 
@@ -1072,6 +1120,10 @@ async function loadUserData() {
 
       cityInput.value =
         result.user.city || '';
+
+        updateRouteAndNode(
+         result.user.city
+      );
 
       tariffInput.value =
         result.user.tariff || '';
