@@ -604,7 +604,6 @@ function addSecondToTariff() {
   updateStatsUI();
 
 }
-
 // ===== DROPDOWN =====
 
 function setupDropdown(input, items) {
@@ -770,35 +769,9 @@ function updateRouteAndNode(city) {
 
 }
 
-  input.addEventListener('focus', () => {
+setupDropdown(cityInput, russianCities);
 
-    renderItems(input.value);
-
-    dropdown.style.display =
-      'block';
-
-  });
-
-  input.addEventListener('input', () => {
-
-    renderItems(input.value);
-
-  });
-
-  document.addEventListener(
-    'click',
-    (e) => {
-
-      if (!wrapper.contains(e.target)) {
-
-        dropdown.style.display =
-          'none';
-
-      }
-
-    }
-  );
-
+setupDropdown(tariffInput, tariffs);
 setupDropdown(cityInput, russianCities);
 
 setupDropdown(tariffInput, tariffs);
