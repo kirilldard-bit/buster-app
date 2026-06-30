@@ -755,51 +755,32 @@ function setupDropdown(input, items) {
 }
 
 // ===== ROUTE & NODE =====
-
 function updateRouteAndNode(city) {
 
   routeValue.textContent =
     getRouteName(city);
 
-  const randomNumber =
-    Math.floor(Math.random() * 9) + 1;
-
-  nodeValue.textContent =
-    `${getNodeCode(city)}-${randomNumber}`;
-
-}
-
-setupDropdown(cityInput, russianCities);
-
-setupDropdown(tariffInput, tariffs);
-setupDropdown(cityInput, russianCities);
-
-setupDropdown(tariffInput, tariffs);
-
-// ===== SUBSCRIPTION =====
-
-async function checkSubscription() {
-
-  try {
-
-    const response = await fetch(
-      `${BACKEND_URL}/check-subscription/${telegramUserId}`
+  let nodeNumber =
+    localStorage.getItem(
+      'buster_node'
     );
 
-    const result =
-      await response.json();
+  if (!nodeNumber) {
 
-    if (!result.active) {
+    nodeNumber =
+      String(
+        Math.floor(Math.random() * 9) + 1
+      ).padStart(2, '0');
 
-      showSubscriptionScreen();
-
-    }
-
-  } catch (err) {
-
-    console.log(err);
+    localStorage.setItem(
+      'buster_node',
+      nodeNumber
+    );
 
   }
+
+  nodeValue.textContent =
+    `${getNodeCode(city)}-${nodeNumber}`;
 
 }
 
