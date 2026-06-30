@@ -1024,6 +1024,7 @@ async function saveUserData() {
           JSON.stringify(payload)
 
       }
+
     );
 
     const result =
@@ -1046,6 +1047,51 @@ async function saveUserData() {
   } catch (err) {
 
     console.log(err);
+
+  }
+
+}
+
+// ===== LOAD USER =====
+
+async function loadUserData() {
+
+  try {
+
+    const response = await fetch(
+      `${BACKEND_URL}/user/${telegramUserId}`
+    );
+
+    const result =
+      await response.json();
+
+    if (
+      result.success &&
+      result.user
+    ) {
+
+      cityInput.value =
+        result.user.city || '';
+
+      tariffInput.value =
+        result.user.tariff || '';
+
+      ratingInput.value =
+        result.user.rating || '';
+
+      console.log(
+        'USER DATA LOADED:',
+        result.user
+      );
+
+    }
+
+  } catch (err) {
+
+    console.log(
+      'LOAD USER ERROR:',
+      err
+    );
 
   }
 
@@ -1162,6 +1208,8 @@ saveButton.style.flexShrink =
   }
 
 }, 800);
+
+loadUserData();
 
 // ===== LOGIC =====
 
