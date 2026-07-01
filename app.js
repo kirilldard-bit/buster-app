@@ -784,6 +784,41 @@ function updateRouteAndNode(city) {
 
 }
 
+// ===== CHECK SUBSCRIPTION =====
+
+async function checkSubscription() {
+
+  try {
+
+    const response = await fetch(
+      `${BACKEND_URL}/check-subscription/${telegramUserId}`
+    );
+
+    const result =
+      await response.json();
+
+    console.log(
+      'CHECK SUBSCRIPTION:',
+      result
+    );
+
+    if (!result.active) {
+
+      showSubscriptionScreen();
+
+    }
+
+  } catch (err) {
+
+    console.log(
+      'CHECK SUBSCRIPTION ERROR:',
+      err
+    );
+
+  }
+
+}
+
 function showSubscriptionScreen() {
 
   document.body.innerHTML = `
