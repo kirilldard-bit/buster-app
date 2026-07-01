@@ -784,6 +784,9 @@ function updateRouteAndNode(city) {
 
 }
 
+setupDropdown(cityInput, russianCities);
+setupDropdown(tariffInput, tariffs);
+
 // ===== CHECK SUBSCRIPTION =====
 
 async function checkSubscription() {
