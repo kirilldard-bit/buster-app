@@ -1020,11 +1020,63 @@ async function activateTrial() {
 
 }
 
-function openPayment() {
+async function openPayment() {
 
-  tg.showAlert(
-    'Касса подключается'
-  );
+  try {
+
+    const response = await fetch(
+      `${BACKEND_URL}/create-payment`,
+      {
+        method: 'POST',
+
+        headers: {
+          'Content-Type':
+            'application/json'
+        },
+
+        body: JSON.stringify({
+          telegram_id: telegramUserId
+        })
+      }
+    );
+
+    const result =
+      await response.json();
+
+    if (
+      result.success &&
+      result.paymentUrl
+    ) {
+
+      Telegram.WebApp.openLink(
+        result.paymentUrl
+      );
+
+    } else {
+
+      tg.showAlert(
+        'Не удалось создать платёж'
+      );
+
+      console.log(
+        'PAYMENT ERROR:',
+        result
+      );
+
+    }
+
+  } catch (err) {
+
+    console.error(
+      'OPEN PAYMENT ERROR:',
+      err
+    );
+
+    tg.showAlert(
+      'Ошибка подключения к оплате'
+    );
+
+  }
 
 }
 
